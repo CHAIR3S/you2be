@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class VideoActor {
 
-    private int videoActor;
+    private int idVideoActor;
 
     private int idVideo;
 
