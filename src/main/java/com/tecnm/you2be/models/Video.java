@@ -3,6 +3,8 @@ package com.tecnm.you2be.models;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @RequiredArgsConstructor
 public class Video {
@@ -17,7 +19,7 @@ public class Video {
 
     private String tipo;
 
-    private double precio;
+    private BigDecimal precio;
 
     private int idCanal;
 

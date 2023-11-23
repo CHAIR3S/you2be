@@ -2,22 +2,23 @@ package com.tecnm.you2be.DAO;
 
 import com.tecnm.you2be.connection.MySQLConnection;
 import com.tecnm.you2be.models.Actor;
-import com.tecnm.you2be.models.Rol;
+import com.tecnm.you2be.models.Canal;
 import javafx.collections.FXCollections;
 
 import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
-public class ActorDao extends MySQLConnection implements Dao<Actor> {
+public class CanalDao extends MySQLConnection implements Dao<Canal> {
+
     Connection conn = getConnection();
 
-    private String table = "actor";
+    private String table = "canal";
 
 
     @Override
-    public Optional<Actor> findById(int id) {
-        Optional<Actor> optionalActor = Optional.empty();
+    public Optional findById(int id) {
+        Optional<Canal> optionalActor = Optional.empty();
         String query = "select * from " + table + " where id_" + table + " = ?";
         try {
             PreparedStatement statement = conn.prepareStatement(query);
@@ -25,12 +26,11 @@ public class ActorDao extends MySQLConnection implements Dao<Actor> {
             ResultSet rs = statement.executeQuery();
             if ( rs.next() )
             {
-                Actor object = new Actor();
-                object.setIdActor(rs.getInt("id_actor"));
+                Canal object = new Canal();
+                object.setIdCanal(rs.getInt("id_canal"));
                 object.setNombre(rs.getString("nombre"));
-                object.setPrimerApellido(rs.getString("primer_apellido"));
-                object.setSegundoApellido(rs.getString("segundo_apellido"));
-                object.setIdRol(rs.getInt("id_rol"));
+                object.setIdUsuario(rs.getInt("id_usuario"));
+                object.setIdVideo(rs.getInt("id_video"));
                 optionalActor = Optional.of(object);
             }
 
@@ -42,9 +42,10 @@ public class ActorDao extends MySQLConnection implements Dao<Actor> {
     }
 
     @Override
-    public List<Actor> findAll() {
+    public List findAll() {
 
-        List<Actor> objectList = FXCollections.observableArrayList();
+
+        List<Canal> objectList = FXCollections.observableArrayList();
         String query = "select * from " + table;
         try {
             Statement statement = conn.createStatement();
@@ -52,12 +53,11 @@ public class ActorDao extends MySQLConnection implements Dao<Actor> {
 
             while (rs.next())
             {
-                Actor object = new Actor();
-                object.setIdActor(rs.getInt("id_actor"));
+                Canal object = new Canal();
+                object.setIdCanal(rs.getInt("id_canal"));
                 object.setNombre(rs.getString("nombre"));
-                object.setPrimerApellido(rs.getString("primer_apellido"));
-                object.setSegundoApellido(rs.getString("segundo_apellido"));
-                object.setIdRol(rs.getInt("id_rol"));
+                object.setIdUsuario(rs.getInt("id_usuario"));
+                object.setIdVideo(rs.getInt("id_video"));
                 objectList.add(object);
             }
 
@@ -68,17 +68,17 @@ public class ActorDao extends MySQLConnection implements Dao<Actor> {
     }
 
     @Override
-    public boolean save(Actor record) {
+    public boolean save(Canal record) {
+
 
         String query = "insert into " + table +
-                " (nombre, primer_apellido, segundo_apellido, id_rol)" +
-                " values (?, ?, ?, ?, ?)";
+                " (nombre, id_usuario, id_video)" +
+                " values (?, ?, ?)";
         try {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, record.getNombre());
-            ps.setString(2, record.getPrimerApellido());
-            ps.setString(3, record.getSegundoApellido());
-            ps.setInt(4, record.getIdRol());
+            ps.setInt(2, record.getIdUsuario());
+            ps.setInt(3, record.getIdVideo());
             ps.execute();
 
             return true;
@@ -90,15 +90,15 @@ public class ActorDao extends MySQLConnection implements Dao<Actor> {
     }
 
     @Override
-    public boolean update(Actor record) {
+    public boolean update(Canal record) {
 
-        String query = "update " + table + " set nombre=?, primer_apellido=?, segundo_apellido=?, id_rol=?  where id_" + table +" = ?";
+
+        String query = "update " + table + " set nombre=?, id_usuario=?, id_video=?  where id_" + table +" = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, record.getNombre());
-            ps.setString(2, record.getPrimerApellido());
-            ps.setString(3, record.getSegundoApellido());
-            ps.setInt(4, record.getIdRol());
+            ps.setInt(2, record.getIdUsuario());
+            ps.setInt(3, record.getIdVideo());
             ps.execute();
             return true;
         } catch (SQLException e) {
@@ -109,6 +109,7 @@ public class ActorDao extends MySQLConnection implements Dao<Actor> {
 
     @Override
     public boolean delete(int id) {
+
 
         String query = "delete from "+ table +" where id_" + table + " = ?";
         try {
