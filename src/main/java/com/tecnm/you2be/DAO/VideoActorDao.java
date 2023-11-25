@@ -10,12 +10,11 @@ import java.util.Optional;
 
 public class VideoActorDao extends MySQLConnection implements Dao<VideoActor> {
 
-    private Connection conn = getConnection();
+    Connection conn = getConnection();
     private String table = "video_actor";
 
     @Override
     public Optional<VideoActor> findById(int id) {
-        // This method might need rethinking since there may not be a single 'id' column
         Optional<VideoActor> optionalVideoActor = Optional.empty();
         String query = "select * from " + table + " where id_video_actor = ?";
         try {
@@ -98,5 +97,5 @@ public class VideoActorDao extends MySQLConnection implements Dao<VideoActor> {
             throw new RuntimeException(e);
         }
     }
-    }
+
 }

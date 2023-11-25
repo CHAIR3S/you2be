@@ -1,5 +1,6 @@
 package com.tecnm.you2be;
 
+import com.tecnm.you2be.youtube.YouTubeManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +19,11 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
+
         launch();
+
+//        YouTubeManager youtube = new YouTubeManager();
+//
+//        youtube.getVideoById("GmL1Nmj9TqY&t");
     }
 }
