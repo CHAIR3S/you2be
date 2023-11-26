@@ -1,4 +1,4 @@
-package com.tecnm.you2be.models;
+package com.tecnm.you2be.youtube.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,12 +7,8 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class Categoria {
-
-    private int idCategoria;
-
-    private String categoria;
-
-    private int idGenero;
-
+public class Thumbnail {
+    private String url;
+    private int width;
+    private int height;
 }
