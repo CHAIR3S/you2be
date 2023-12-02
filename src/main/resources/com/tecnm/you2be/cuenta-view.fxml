@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tecnm.you2be.CuentaController">
+
+
+
+
+    <children>
+      <AnchorPane prefHeight="616.0" prefWidth="993.0" style="-fx-background-color: #030307; -fx-background-radius: 15;">
+         <children>
+            <VBox prefHeight="544.0" prefWidth="74.0" style="-fx-background-color: #131022; -fx-background-radius: 15 0 0 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Pane prefHeight="79.0" prefWidth="74.0" style="-fx-background-radius: 15 0 15 15;" />
+
+
+                  <Button contentDisplay="TOP" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onAction="#onRegresar" prefHeight="66.0" prefWidth="74.0" styleClass="button3" stylesheets="@../../../styles/styles.css" text="Regresar" textFill="#a868a0">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/return.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <VBox.margin>
+                        <Insets top="460.0" />
+                     </VBox.margin>
+                  </Button>
+
+
+               </children>
+            </VBox>
+
+
+
+            <AnchorPane fx:id="anPaneCuenta" layoutX="91.0" layoutY="69.0" prefHeight="531.0" prefWidth="886.0" style="-fx-background-color: #131022; -fx-background-radius: 10;" stylesheets="@../../../styles/styles.css" visible="false">
+               <children>
+                  <VBox prefHeight="531.0" prefWidth="465.0">
+                     <children>
+                        <HBox prefHeight="50.0" prefWidth="423.0">
+                           <children>
+                              <Label text="Mi Cuenta" textFill="WHITE">
+                                 <font>
+                                    <Font size="26.0" />
+                                 </font>
+                              </Label>
+                              <Label text="You2be" textFill="RED">
+                                 <font>
+                                    <Font size="26.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="20.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="40.0" top="35.0" />
+                           </padding>
+                        </HBox>
+
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#OnGetInformacion" prefHeight="63.0" prefWidth="468.0" styleClass="buttonLink" text="Información cuenta">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin></Button>
+
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#OnGetVideos" prefHeight="63.0" prefWidth="468.0" styleClass="buttonLink" text="Videos subidos">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin></Button>
+
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#OnGetSuscrip" prefHeight="63.0" prefWidth="468.0" styleClass="buttonLink" text="Suscripción">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin></Button>
+
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#OnGetCompras" prefHeight="63.0" prefWidth="468.0" styleClass="buttonLink" text="Compras">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin></Button>
+
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+
+
+            <AnchorPane fx:id="anPaneInformacion" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="false">
+               <children>
+                  <VBox alignment="CENTER" layoutX="120.0" layoutY="14.0" prefHeight="451.0" prefWidth="651.0">
+                     <children>
+
+                        <Label fx:id="lblNombre" alignment="CENTER" styleClass="labelNames" text="Nombre">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin></Label>
+                        <Label styleClass="labelDescription">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin></Label>
+
+                        <Line endX="300.0" startX="-100.0" stroke="#4c3273" strokeWidth="5" />
+
+
+                        <Label fx:id="lblEmail" styleClass="labelNames" text="email" />
+                        <Label styleClass="labelDescription">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin></Label>
+
+                        <Line endX="300.0" startX="-100.0" stroke="#4c3273" strokeWidth="5" />
+
+                        <Label fx:id="lblContraseña" styleClass="labelNames" text="Password" />
+                        <Label styleClass="labelDescription">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin></Label>
+
+                        <Line endX="300.0" startX="-100.0" stroke="#4c3273" strokeWidth="5" />
+
+                        <Label fx:id="lblNacimiento" styleClass="labelNames" text="Nacimiento" />
+                        <Label styleClass="labelDescription">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin></Label>
+
+                        <Line endX="300.0" startX="-100.0" stroke="#4c3273" strokeWidth="5" />
+
+                        <Label fx:id="lblUsuario" styleClass="labelNames" text="Usuario" />
+                        <Label styleClass="labelDescription" />
+                     </children>
+                  </VBox>
+
+
+
+                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="regresar">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/return.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+
+
+               </children>
+            </AnchorPane>
+
+
+
+
+            <AnchorPane fx:id="anPaneMisVideos" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="false">
+               <children>
+                  <VBox alignment="CENTER" layoutX="120.0" layoutY="14.0" prefHeight="451.0" prefWidth="651.0">
+                  </VBox>
+
+
+
+                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="regresar">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/return.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+
+
+               </children>
+            </AnchorPane>
+
+
+            <AnchorPane fx:id="anPaneSuscripcion" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="true">
+               <children>
+
+
+                  <VBox alignment="CENTER" layoutX="120.0" layoutY="14.0" prefHeight="451.0" prefWidth="651.0" AnchorPane.topAnchor="14.0">
+                     <children>
+                        <Label styleClass="labelNames" text="Tipo" />
+                        <Label fx:id="lblTipo" text="Label" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Label styleClass="labelNames" text="Costo">
+                           <VBox.margin>
+                              <Insets top="40.0" />
+                           </VBox.margin></Label>
+                        <Label fx:id="lblCosto" text="Label" textFill="#f8f8f8">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <Button mnemonicParsing="false" onAction="#onActualizarAction" style="-fx-background-color: #4c3273;" text="Actualizar" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="50.0" />
+                           </VBox.margin></Button>
+                     </children></VBox>
+
+
+
+                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="regresar">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/return.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+
+
+               </children>
+            </AnchorPane>
+
+
+
+            <AnchorPane fx:id="anPaneCompras" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="´false´">
+               <children>
+                  <VBox alignment="CENTER" layoutX="120.0" layoutY="14.0" prefHeight="451.0" prefWidth="651.0">
+                  </VBox>
+
+
+
+                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="regresar">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/return.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+
+
+               </children>
+            </AnchorPane>
+
+
+
+            <Pane layoutX="222.0" layoutY="23.0" prefHeight="93.0" prefWidth="580.0">
+               <children>
+                  <Label fx:id="lblTitle" layoutX="80.0" layoutY="26.0" styleClass="Ti" text="" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="35.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+
+
+            <ImageView fitHeight="38.0" fitWidth="34.0" layoutX="91.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../imagenes/logotipo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="134.0" layoutY="29.0" text="You2Be " textFill="WHITE">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+
+
+         </children>
+
+
+      </AnchorPane>
+
+   </children>
+</AnchorPane>

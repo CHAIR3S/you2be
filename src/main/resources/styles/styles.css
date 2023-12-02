@@ -1,0 +1,224 @@
+.button1
+{
+-fx-background-color : #393351;
+-fx-background-radius :  30 0 0 30;
+}
+.button1:hover
+{
+-fx-background-color : #524A7B ;
+-fx-background-radius :  30 0 0 30;
+}
+
+.buttonSearch{
+    -fx-background-color : #3c1b60;
+    -fx-text-fill: white;
+}
+.button1:pressed
+{
+-fx-background-color : #2F2B43 ;
+-fx-background-radius :  30 0 0 30;
+}
+
+/*
+Gradiante para el Pane de Informacion
+ */
+
+.anchor-pane{
+        -fx-background-color: #020024; /* Color base */
+        -fx-background-color:
+        linear-gradient(to bottom, rgba(2, 0, 36, 0.31), rgba(97, 9, 121, 0.31)), /* Primer tramo del gradiente */
+        linear-gradient(to right, rgba(2, 0, 36, 0.31), rgba(61, 0, 136, 0.31)); /* Segundo tramo del gradiente */
+    -fx-background-blend-mode: overlay, overlay; /* Mezcla los dos gradientes */
+    -fx-background-radius: 10; /* Radio de las esquinas */
+    -fx-border-radius: 10; /* Radio de las esquinas para el borde */
+    -fx-border-color: #030000; /* Color del borde */
+    -fx-border-width: 2; /* Ancho del borde */
+}
+
+.button2
+{
+-fx-background-color : #393351;
+-fx-background-radius :  20;
+}
+.button2:hover
+{
+-fx-background-color : #524A7B ;
+-fx-background-radius :  20;
+}
+.button2:pressed
+{
+-fx-background-color : #2F2B43 ;
+-fx-background-radius :  20;
+}
+
+/*
+Botón de los laterales
+ */
+.button3
+{
+    -fx-background-color : #141124;
+    -fx-background-radius :  0 0 0 0;
+}
+
+/*
+Boton cuando está seleccionado
+ */
+.button3:hover
+{
+    -fx-background-color : #524A7B ;
+}
+/*
+Acción cuando es presionado
+ */
+.button3:pressed
+{
+    -fx-background-color : #2F2B43 ;
+}
+/*
+Acción cuando el mouse está por encima
+ */
+.button3:focused{
+    -fx-background-color: #332765;
+    -fx-border-color: #CDD1D6;
+    -fx-border-width: 0px 0px 0px 3px;
+}
+
+.button4
+{
+    -fx-border-radius: 20;
+    -fx-background-color :linear-gradient(to top left, #41951C, #D4CEE3);
+    -fx-background-radius :  20 20 20 20;
+}
+.button4:hover
+{
+    -fx-background-color :linear-gradient(to top left, #D4CEE3, #41951C);
+    -fx-background-radius :  30 30 30 30;
+}
+.button4:pressed
+{
+    -fx-background-color :linear-gradient(to top left, #41951C, #D4CEE3);
+    -fx-background-radius :  30 30 30 30;
+}
+
+
+/*
+Estilo de los hiperlinks de la parte de cuenta
+ */
+.buttonLink{
+    -fx-background-color: transparent;
+    -fx-font-size: 25;
+    -fx-text-fill: #a868a0; /* Cambia el color del texto del botón si es necesario */
+}
+
+/*
+Acción para que parezca que es un hiperlink
+ */
+.buttonLink:hover{
+    -fx-cursor: hand; /* Cambia el cursor a una mano cuando pasa sobre el botón */
+    -fx-underline: true; /* Activa el subrayado */
+}
+
+.combo-box
+{
+    -fx-background-color : #141124;
+    -fx-border-color:  #515658;
+    -fx-border-radius: 30;
+}
+.combo-box:hover
+{
+    -fx-background-color : #141124;
+    -fx-border-color:  #FFFF;
+    -fx-border-radius: 30;
+}
+.combo-box:pressed
+{
+    -fx-background-color : #141124;
+    -fx-border-color:  #FFFF;
+    -fx-border-radius: 30;
+}
+.table-view .column-header,
+.table-view .column-header-background .fuller{
+    -fx-cell-size: 20;
+    -fx-background-color: #2D75E8;
+}
+
+.table-view .column-header .label{
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-view .cell{
+    -fx-cell-size: 30;
+    -fx-alignment: center-left;
+    -fx-text-fill: #000000;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-row-cell:selected{
+    -fx-background-color: rgb(127,172,243);
+}
+.table-row-cell:selected .text{
+    -fx-fill: white;
+}
+
+
+/* chart properties */
+
+.chart {
+    -fx-padding: 10px;
+    -fx-background-color: transparent;
+    -fx-legend-visible: false;
+}
+.chart-plot-background {
+    -fx-background-color:transparent;
+}
+
+.chart-pie {
+    -fx-border-color: derive(-fx-pie-color, 1%);
+    -fx-border-width: 0px;
+}
+.linear-grad
+{
+    -fx-background-color: linear-gradient(to bottom left, #A868A0, #2D75E8);
+}
+
+
+/*
+TextField para buscador
+ */
+.text-field-search{
+        -fx-font-family: "Arial";
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
+    -fx-highlight-fill: derive(-fx-control-inner-background,-20%);
+    -fx-highlight-text-fill: -fx-text-inner-color;
+    -fx-prompt-text-fill: transparent;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent transparent #a868a0 transparent;
+    -fx-border-width: 1;
+    -fx-border-insets: 0 0 1 0;
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-cursor: text;
+    -fx-padding: 0.166667em 0em 0.333333em 0em;
+}
+
+
+.labelNames{
+    -fx-font-family: "Arial Rounded MT Bold";
+   -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 30;
+    -fx-alignment: center;
+}
+
+.labelDescription{
+    -fx-font-family: "Arial";
+   -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 15;
+    -fx-alignment: center;
+}
+
