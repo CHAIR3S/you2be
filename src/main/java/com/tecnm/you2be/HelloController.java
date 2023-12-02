@@ -2,21 +2,35 @@ package com.tecnm.you2be;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tecnm.you2be.youtube.models.Search;
-import com.tecnm.you2be.youtube.models.Video;
 import com.tecnm.you2be.youtube.models.YoutubeResponse;
 import com.tecnm.you2be.youtube.service.YoutubeVideoService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HelloController implements Initializable {
+     private double xOffset = 0;
+    private double yOffset = 0;
+
     @FXML
     private Label welcomeText;
 
@@ -30,7 +44,13 @@ public class HelloController implements Initializable {
     private WebView webView;
 
     @FXML
-    private TextArea urlTxtArea;
+    private TextField txtUrl;
+
+    @FXML
+    private AnchorPane anPaneInicio;
+
+    @FXML
+    private Pane paneImages;
 
     @FXML
     protected void onHelloButtonClick() {
@@ -41,8 +61,10 @@ public class HelloController implements Initializable {
     @FXML
     void play() {
         //Evalua con expresion regular y manda video con url embebida a WebView
-        if(!urlTxtArea.getText().equals("")){
-            Matcher matcher = pattern.matcher(this.urlTxtArea.getText());
+        if(!txtUrl.getText().equals("")){
+            Matcher matcher = pattern.matcher(this.txtUrl.getText());
+            paneImages.setVisible(false);
+            webView.setVisible(true);
             if(matcher.find()){
                 this.url ="https://www.youtube.com/embed/"+matcher.group(0);
                 webView.getEngine().load(this.url);
@@ -96,4 +118,49 @@ public class HelloController implements Initializable {
 //            });
 
     }
+
+    public void onInicioOpen(ActionEvent actionEvent) {
+        anPaneInicio.setVisible(true);
+    }
+
+    public void onMisVideosOpen(ActionEvent actionEvent) {
+        anPaneInicio.setVisible(false);
+    }
+
+    public void onFavoritosOpen(ActionEvent actionEvent) {
+    }
+
+    public void onMiCuentaOpen(ActionEvent actionEvent) {
+
+    try {
+        // Código para abrir la nueva ventana
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/tecnm/you2be/cuenta-view.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.TRANSPARENT); // Establece la ventana sin bordes
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT); // Hace la escena transparente
+        stage.setScene(scene);
+        stage.show();
+
+        // Código para mover la ventana
+        root.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
+
+        // Cerrar la ventana actual
+        Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        currentStage.close();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 }
