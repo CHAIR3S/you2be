@@ -275,7 +275,7 @@ public class HelloController implements Initializable {
     }
 
 
-    // Método para obtener datos del objet seleccionado de lista de videos
+// Método para obtener datos del objet seleccionado de lista de videos
     public void handleListViewClick() {
         // Obtiene el ítem seleccionado
         CardVideo selectedCard = imageListView.getSelectionModel().getSelectedItem();
