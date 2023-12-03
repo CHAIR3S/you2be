@@ -28,7 +28,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("login-view.fxml"));
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 
         //grab your root here

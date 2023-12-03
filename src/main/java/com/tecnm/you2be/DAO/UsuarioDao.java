@@ -1,6 +1,7 @@
 package com.tecnm.you2be.DAO;
 
 import com.tecnm.you2be.connection.MySQLConnection;
+import com.tecnm.you2be.models.Canal;
 import com.tecnm.you2be.models.Usuario;
 import javafx.collections.FXCollections;
 
@@ -65,9 +66,9 @@ public class UsuarioDao extends MySQLConnection implements Dao<Usuario> {
 
     @Override
     public boolean save(Usuario record) {
-        String query = "insert into " + table + " (nombre, primer_apellido, segundo_apellido, email, password, nacimiento) values (?, ?, ?, ?, ?, ?)";
+        String query = "insert into " + table + " (nombre, primer_apellido, segundo_apellido, email, password, nacimineto) values (?, ?, ?, ?, ?, ?)";
         try {
-            PreparedStatement ps = conn.prepareStatement(query);
+            PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, record.getNombre());
             ps.setString(2, record.getPrimerApellido());
             ps.setString(3, record.getSegundoApellido());
@@ -113,5 +114,30 @@ public class UsuarioDao extends MySQLConnection implements Dao<Usuario> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Optional<Usuario> login(String email, String password) {
+        Optional<Usuario> optionalUsuario = Optional.empty();
+        String query = "select * from " + table + " where email = ? and password = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, email);
+            statement.setString(2, password);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setIdUsuario(rs.getInt("id_usuario"));
+                usuario.setNombre(rs.getString("nombre"));
+                usuario.setPrimerApellido(rs.getString("primer_apellido"));
+                usuario.setSegundoApellido(rs.getString("segundo_apellido"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setPassword(rs.getString("password"));
+                usuario.setNacimiento(rs.getDate("nacimineto"));
+                optionalUsuario = Optional.of(usuario);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return optionalUsuario;
     }
 }
