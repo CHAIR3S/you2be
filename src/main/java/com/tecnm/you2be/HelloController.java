@@ -62,7 +62,7 @@ public class HelloController implements Initializable {
     private TextField txtUrl;
 
     @FXML
-    private AnchorPane anPaneInicio, anPaneMisVideos;
+    private AnchorPane anPaneInicio, anPaneMisVideos, anPaneReproductor;
 
     @FXML
     private Pane paneImages;
@@ -138,13 +138,12 @@ public class HelloController implements Initializable {
     }
 
     public void onInicioOpen(ActionEvent actionEvent) {
-
-        anPaneMisVideos.setVisible(false);
+        cerrarVentanas();
         anPaneInicio.setVisible(true);
     }
 
     public void onMisVideosOpen(ActionEvent actionEvent) {
-        anPaneInicio.setVisible(false);
+        cerrarVentanas();
         anPaneMisVideos.setVisible(true);
 
         imageListView.getItems().removeAll();
@@ -282,9 +281,23 @@ public class HelloController implements Initializable {
         CardVideo selectedCard = imageListView.getSelectionModel().getSelectedItem();
 
         if (selectedCard != null) {
-            // Accede al título del objeto
+            // Accede al título del objeto, url, etc, lo que se necesite
             String title = selectedCard.getTitulo();
-            System.out.println(title);
+
+            //Abrir reproductor
+            cerrarVentanas();
+            abrirReproductor();
         }
+    }
+
+    public void abrirReproductor(){
+        cerrarVentanas();
+        anPaneReproductor.setVisible(true);
+    }
+
+    public void cerrarVentanas(){
+        anPaneReproductor.setVisible(false);
+        anPaneMisVideos.setVisible(false);
+        anPaneInicio.setVisible(false);
     }
 }
