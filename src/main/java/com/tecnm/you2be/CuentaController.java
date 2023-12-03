@@ -129,7 +129,10 @@ public class CuentaController implements Initializable{
         anPaneCompras.setVisible(false);
         anPaneMisVideos.setVisible(false);
         anPaneSuscripcion.setVisible(false);
+        lblTitle.setText("");
     }
 
+    public void onActualizarAction(ActionEvent actionEvent) {
+    }
 }
 

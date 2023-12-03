@@ -40,7 +40,7 @@
 
 
 
-            <AnchorPane fx:id="anPaneCuenta" layoutX="91.0" layoutY="69.0" prefHeight="531.0" prefWidth="886.0" style="-fx-background-color: #131022; -fx-background-radius: 10;" stylesheets="@../../../styles/styles.css" visible="false">
+            <AnchorPane fx:id="anPaneCuenta" layoutX="91.0" layoutY="69.0" prefHeight="531.0" prefWidth="886.0" style="-fx-background-color: #131022; -fx-background-radius: 10;" stylesheets="@../../../styles/styles.css" visible="true">
                <children>
                   <VBox prefHeight="531.0" prefWidth="465.0">
                      <children>
@@ -178,7 +178,7 @@
             </AnchorPane>
 
 
-            <AnchorPane fx:id="anPaneSuscripcion" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="true">
+            <AnchorPane fx:id="anPaneSuscripcion" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="false">
                <children>
 
 
