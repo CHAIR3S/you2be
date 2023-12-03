@@ -65,6 +65,11 @@ public class CuentaController implements Initializable{
 
     }
 
+    @FXML
+    public void onActualizarAction(){
+
+    }
+
     public void onRegresar(ActionEvent actionEvent) {
 
     try {
@@ -124,11 +129,11 @@ public class CuentaController implements Initializable{
     }
 
     public void onCuenta(ActionEvent actionEvent) {
-        anPaneCuenta.setVisible(true);
         anPaneInformacion.setVisible(false);
         anPaneCompras.setVisible(false);
         anPaneMisVideos.setVisible(false);
         anPaneSuscripcion.setVisible(false);
+        anPaneCuenta.setVisible(true);
     }
 
 }

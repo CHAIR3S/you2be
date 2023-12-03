@@ -65,12 +65,12 @@
                            </padding>
                         </HBox>
 
-                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#OnGetInformacion" prefHeight="63.0" prefWidth="468.0" styleClass="buttonLink" text="Información cuenta">
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#OnGetInformacion" prefHeight="63.0" prefWidth="468.0" styleClass="buttonLink" text="Información Cuenta">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin></Button>
 
-                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#OnGetVideos" prefHeight="63.0" prefWidth="468.0" styleClass="buttonLink" text="Videos subidos">
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#OnGetVideos" prefHeight="63.0" prefWidth="468.0" styleClass="buttonLink" text="Subir Video">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin></Button>

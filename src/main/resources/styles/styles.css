@@ -1,12 +1,12 @@
 .button1
 {
--fx-background-color : #393351;
--fx-background-radius :  30 0 0 30;
+    -fx-background-color : #393351;
+    -fx-background-radius :  30 0 0 30;
 }
 .button1:hover
 {
--fx-background-color : #524A7B ;
--fx-background-radius :  30 0 0 30;
+    -fx-background-color : #524A7B ;
+    -fx-background-radius :  30 0 0 30;
 }
 
 .buttonSearch{
@@ -15,8 +15,8 @@
 }
 .button1:pressed
 {
--fx-background-color : #2F2B43 ;
--fx-background-radius :  30 0 0 30;
+    -fx-background-color : #2F2B43 ;
+    -fx-background-radius :  30 0 0 30;
 }
 
 /*
@@ -24,15 +24,23 @@ Gradiante para el Pane de Informacion
  */
 
 .anchor-pane{
-        -fx-background-color: #020024; /* Color base */
-        -fx-background-color:
-        linear-gradient(to bottom, rgba(2, 0, 36, 0.31), rgba(97, 9, 121, 0.31)), /* Primer tramo del gradiente */
-        linear-gradient(to right, rgba(2, 0, 36, 0.31), rgba(61, 0, 136, 0.31)); /* Segundo tramo del gradiente */
+    -fx-background-color: #020024; /* Color base */
+    -fx-background-color: linear-gradient(to bottom, rgba(2, 0, 36, 0.31), rgba(97, 9, 121, 0.31)), /* Primer tramo del gradiente */ linear-gradient(to right, rgba(2, 0, 36, 0.31), rgba(61, 0, 136, 0.31)); /* Segundo tramo del gradiente */
     -fx-background-blend-mode: overlay, overlay; /* Mezcla los dos gradientes */
     -fx-background-radius: 10; /* Radio de las esquinas */
     -fx-border-radius: 10; /* Radio de las esquinas para el borde */
     -fx-border-color: #030000; /* Color del borde */
     -fx-border-width: 2; /* Ancho del borde */
+
+}
+
+
+.list-view {
+    -fx-control-inner-background: #020024;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #030141; /* Cambia #yourSelectedColor al color que desees para el elemento seleccionado */
 }
 
 .button2

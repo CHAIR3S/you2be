@@ -8,6 +8,8 @@ module com.tecnm.you2be {
     requires org.apache.httpcomponents.httpcore;
     requires static lombok;
     requires com.fasterxml.jackson.databind;
+    requires javafx.graphics;
+
 
 
     opens com.tecnm.you2be to javafx.fxml;
