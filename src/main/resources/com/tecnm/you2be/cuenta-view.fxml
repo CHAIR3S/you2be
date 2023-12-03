@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -8,7 +7,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tecnm.you2be.CuentaController">
+<AnchorPane style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tecnm.you2be.CuentaController">
 
 
 
@@ -84,6 +83,7 @@
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin></Button>
+                        <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#OnGetReportes" prefHeight="63.0" prefWidth="468.0" styleClass="buttonLink" text="Reportes" />
 
                      </children>
                   </VBox>
@@ -185,25 +185,34 @@
                   <VBox alignment="CENTER" layoutX="120.0" layoutY="14.0" prefHeight="451.0" prefWidth="651.0" AnchorPane.topAnchor="14.0">
                      <children>
                         <Label styleClass="labelNames" text="Tipo" />
-                        <Label fx:id="lblTipo" text="Label" textFill="WHITE">
+                        <Label fx:id="lblTipo" textFill="#aeaeae">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
+
+                        <ComboBox fx:id="cboTipo" prefHeight="33.0" prefWidth="225.0" visible="false" />
+
+
                         <Label styleClass="labelNames" text="Costo">
                            <VBox.margin>
                               <Insets top="40.0" />
                            </VBox.margin></Label>
-                        <Label fx:id="lblCosto" text="Label" textFill="#f8f8f8">
+                        <Label fx:id="lblCosto" textFill="#aeaeae">
                            <font>
                               <Font size="18.0" />
                            </font></Label>
-                        <Button mnemonicParsing="false" onAction="#onActualizarAction" style="-fx-background-color: #4c3273;" text="Actualizar" textFill="WHITE">
+                        <Button fx:id="btnActualizar" mnemonicParsing="false" onAction="#onActualizarAction" style="-fx-background-color: #4c3273;" text="Actualizar" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                            <VBox.margin>
                               <Insets top="50.0" />
                            </VBox.margin></Button>
+                        <Button fx:id="btnPagar" mnemonicParsing="false" onAction="#onPagarAction" style="-fx-background-color: #4c3273;" text="Pagar" textFill="WHITE" visible="false">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Button>
                      </children></VBox>
 
 
@@ -246,10 +255,32 @@
             </AnchorPane>
 
 
+            <AnchorPane fx:id="anPaneReportes" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="´false´">
+               <children>
+                  <VBox alignment="CENTER" layoutX="120.0" layoutY="14.0" prefHeight="451.0" prefWidth="651.0">
+                  </VBox>
+
+
+
+                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="regresar">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/return.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+
+
+               </children>
+            </AnchorPane>
+
+
 
             <Pane layoutX="222.0" layoutY="23.0" prefHeight="93.0" prefWidth="580.0">
                <children>
-                  <Label fx:id="lblTitle" layoutX="80.0" layoutY="26.0" styleClass="Ti" text="" textFill="WHITE">
+                  <Label fx:id="lblTitle" layoutX="188.0" layoutY="14.0" styleClass="Ti" textFill="WHITE">
                      <font>
                         <Font name="Arial Rounded MT Bold" size="35.0" />
                      </font>

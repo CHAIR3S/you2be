@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -17,6 +18,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.control.Button;
 
 public class CuentaController implements Initializable{
 
@@ -30,6 +32,9 @@ public class CuentaController implements Initializable{
 
     @FXML
     private Label lblNacimiento;
+
+    @FXML
+    private ComboBox<?> cboTipo;
 
     @FXML
     private AnchorPane anPaneCompras;
@@ -50,10 +55,25 @@ public class CuentaController implements Initializable{
     private AnchorPane anPaneCuenta;
 
     @FXML
+    private AnchorPane anPaneReportes;
+
+    @FXML
     private Label lblTitle;
 
     @FXML
+    private Label lblCosto;
+
+    @FXML
     private AnchorPane anPaneMisVideos;
+
+    @FXML
+    private Label lblTipo;
+
+    @FXML
+    private Button btnActualizar;
+
+    @FXML
+    private Button btnPagar;
 
 
 
@@ -134,10 +154,33 @@ public class CuentaController implements Initializable{
         anPaneMisVideos.setVisible(false);
         anPaneSuscripcion.setVisible(false);
         anPaneCuenta.setVisible(true);
+        anPaneReportes.setVisible(false);
         lblTitle.setText("");
     }
 
     public void onActualizarAction(ActionEvent actionEvent) {
+        lblTipo.setVisible(false);
+        cboTipo.setVisible(true);
+        actualizarCosto();
+        btnActualizar.setVisible(false);
+        btnPagar.setVisible(true);
+
+    }
+
+    private void actualizarCosto() {
+        //aquí se decidirá cual de los dos tipos está seleccionado y al momento
+        //que se seleccione en el combobox se actualizará el precio al seleccionado
+    }
+
+    public void onPagarAction(ActionEvent actionEvent) {
+
+    }
+
+    public void OnGetReportes(ActionEvent actionEvent) {
+
+        anPaneCuenta.setVisible(false);
+        anPaneReportes.setVisible(true);
+        lblTitle.setText("Reportes");
     }
 }
 
