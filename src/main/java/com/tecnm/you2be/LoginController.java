@@ -28,6 +28,14 @@ public class LoginController {
     PasswordField textFieldContraseña;
     UsuarioDao usuarioDao = new UsuarioDao();
 
+    Usuario usuario = new Usuario();
+
+    private static Usuario usuarioActual;
+
+    public static Usuario getUsuarioActual() {
+        return usuarioActual;
+    }
+
     //Metodo para el boton d inicio de sesión
     @FXML
     protected void OnInicioSesion(ActionEvent event) {
@@ -37,6 +45,7 @@ public class LoginController {
 
         if (optionalUsuario.isPresent()) {
             mostrarMensaje("Inicio de sesion exitoso");
+            usuarioActual = optionalUsuario.get();
             abrirNuevaVentana("hello-view.fxml");
 
         } else {
