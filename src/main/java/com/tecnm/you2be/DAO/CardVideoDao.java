@@ -13,27 +13,59 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 
-public class CardVideoDao extends MySQLConnection implements Dao<CanalDao> {
+public class CardVideoDao extends MySQLConnection implements Dao<CardVideo> {
     Connection conn = getConnection();
+
+
     @Override
-    public Optional<CanalDao> findById(int id) {
+    public Optional<CardVideo> findById(int id) {
         return Optional.empty();
     }
 
     @Override
-    public List<CanalDao> findAll() {
-        return null;
+    public List<CardVideo> findAll() {
+        List<CardVideo> lisVideo = FXCollections.observableArrayList();
+        String query = "select * from video";
+
+        try{
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()){
+                CardVideo cd = new CardVideo();
+
+                cd.setIdVideo(rs.getInt("id_video"));
+                cd.setTipo(rs.getString("tipo"));
+                String[] links = rs.getString("link").split(" ");
+
+                cd.setLinkVideo(links[0]);
+                cd.setLinkImage(links[1]);
+
+
+                cd.setTitulo(rs.getString("titulo"));
+                cd.setDescripcion(rs.getString("descripcion"));
+                cd.setPrecio(rs.getDouble("precio"));
+
+                lisVideo.add(cd);
+            }
+
+
+            return lisVideo;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
-    public boolean save(CanalDao record) {
+    public boolean save(CardVideo record) {
         return false;
     }
 
     @Override
-    public boolean update(CanalDao record) {
+    public boolean update(CardVideo record) {
         return false;
     }
+
 
     @Override
     public boolean delete(int id) {
@@ -51,7 +83,7 @@ public class CardVideoDao extends MySQLConnection implements Dao<CanalDao> {
         Statement statement = conn.createStatement();
         ResultSet rsu = statement.executeQuery(queryUser);
 
-        if( rsu.next() ){
+        while( rsu.next() ){
             String query = "select * from video v where v.id_canal =  " +rsu.getInt("id_canal")
                     + "and v.titulo like '%" + textInVideo + "%'";
             ResultSet rs = statement.executeQuery(query);
