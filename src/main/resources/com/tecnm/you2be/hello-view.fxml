@@ -13,8 +13,6 @@
 <AnchorPane style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tecnm.you2be.HelloController">
 
 
-
-
     <children>
       <AnchorPane prefHeight="616.0" prefWidth="993.0" style="-fx-background-color: #030307; -fx-background-radius: 15;">
          <children>
@@ -120,7 +118,11 @@
                            </image>
                         </ImageView>
                      </children>
+
                   </Pane>
+                     <ListView fx:id="imageListViewInit"
+                               layoutX="39.0" layoutY="138.0" prefHeight="337.0" prefWidth="803.0">
+                     </ListView>
                </children>
             </AnchorPane>
 
@@ -261,6 +263,34 @@
                    </ImageView>
                 </children>
              </Pane>
+
+             <VBox fx:id="infoVideo" layoutX="35" layoutY="500.0" prefHeight="110.0" prefWidth="200" style="visibility: false">
+
+                <VBox spacing="5">
+                   <padding>
+                      <Insets top="30" bottom="10"/>
+                   </padding>
+                   <Label fx:id="lblTitle" />
+                   <Label fx:id="lblCanal"/>
+                   <Label fx:id="lblDescripcion"/>
+                </VBox>
+
+                <HBox spacing="10">
+
+                   <Button fx:id="btnLike">
+                      Me gusta
+                   </Button>
+                   <Button fx:id="btnDislike">
+                      No me gusta
+                   </Button>
+
+                   <padding>
+                      <Insets top="5" bottom="20"/>
+                   </padding>
+                </HBox>
+
+
+             </VBox>
           </children>
        </AnchorPane>
 
