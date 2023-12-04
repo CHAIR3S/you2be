@@ -11,13 +11,11 @@ public class MySQLConnection {
     private static String hostname   = "localhost";
     private static String dbname = "proy_tap";
     private static String dbport = "3306";
-<<<<<<< HEAD
+
     private static String dbuser = "admin_proy";
     private static String dbpass = "123";
-=======
-    private static String dbuser = "root";
-    private static String dbpass = "Luischaip12";
->>>>>>> 20064b2d2ecbb92b33be46dc8b480c71cd0fadc9
+
+
 
 
     public static void Connect() {

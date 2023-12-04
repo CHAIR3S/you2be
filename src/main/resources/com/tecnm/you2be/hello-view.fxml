@@ -277,10 +277,10 @@
 
                 <HBox spacing="10">
 
-                   <Button fx:id="btnLike">
+                   <Button fx:id="btnLike" onAction="#onLikeVideo">
                       Me gusta
                    </Button>
-                   <Button fx:id="btnDislike">
+                   <Button fx:id="btnDislike" onAction="#onDislikeVideo">
                       No me gusta
                    </Button>
 
