@@ -135,6 +135,14 @@ public class LoginController {
         Stage stage = (Stage) txtCorreo.getScene().getWindow();
         stage.close();
     }
+    @FXML
+    protected void OnInvitado(){
+        Usuario usuario = new Usuario();
+        usuario = null;
+        mostrarMensaje("Usted entrara como un usuario invitado");
+        abrirNuevaVentana("hello-view.fxml");
+        cerrarVentanaActual();
+    }
 }
 
 
