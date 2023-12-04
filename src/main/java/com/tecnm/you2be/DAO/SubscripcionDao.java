@@ -2,6 +2,7 @@ package com.tecnm.you2be.DAO;
 
 import com.tecnm.you2be.connection.MySQLConnection;
 import com.tecnm.you2be.models.Subscripcion;
+import com.tecnm.you2be.models.Usuario;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -107,6 +108,24 @@ public class SubscripcionDao extends MySQLConnection implements Dao<Subscripcion
             ps.setInt(1, id);
             ps.execute();
             return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public Subscripcion checkUserSubscription(Usuario user){
+        String query = "select * from subscripcion sub where sub.id_usuario = " + user.getIdUsuario();
+
+        try{
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            Subscripcion sub = new Subscripcion();
+            sub.setTipo(rs.getString("tipo"));
+
+            return sub;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

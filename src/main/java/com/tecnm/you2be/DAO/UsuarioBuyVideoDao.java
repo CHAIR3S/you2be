@@ -1,6 +1,7 @@
 package com.tecnm.you2be.DAO;
 
 import com.tecnm.you2be.connection.MySQLConnection;
+import com.tecnm.you2be.models.Usuario;
 import com.tecnm.you2be.models.UsuarioBuyVideo;
 
 import java.sql.*;
@@ -101,6 +102,20 @@ public class UsuarioBuyVideoDao extends MySQLConnection implements Dao<UsuarioBu
             ps.setInt(1, id);
             ps.execute();
             return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public boolean checkIfUserHaveCard(Usuario usr){
+        String query = "select * from " + table + " ubv where ubv.id_usuario = " + usr.getIdUsuario();
+
+        try{
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            return rs.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
