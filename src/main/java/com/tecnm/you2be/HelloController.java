@@ -112,6 +112,16 @@ public class HelloController implements Initializable {
         }
     }
 
+    @FXML
+    void onLikeVideo(){
+
+    }
+
+    @FXML
+    void onDislikeVideo(){
+
+    }
+
     void play(String url){
         Matcher matcher = pattern.matcher(url);
         paneVideos.setVisible(false);
