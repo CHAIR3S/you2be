@@ -3,6 +3,7 @@ package com.tecnm.you2be;
 import com.tecnm.you2be.DAO.SubscripcionDao;
 import com.tecnm.you2be.models.Subscripcion;
 import com.tecnm.you2be.models.Usuario;
+import com.tecnm.you2be.reports.MasVistos;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +21,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.control.Label;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -82,6 +85,10 @@ public class CuentaController implements Initializable{
     private Button btnPagar;
      Usuario usuario = new Usuario();
 
+     private MasVistos reporteVistos = new MasVistos();
+
+
+    public static final String DESTINO_MAS_VISTOS = "results/TasksReport.pdf";
 
      private double xOffset = 0;
     private double yOffset = 0;
@@ -236,6 +243,28 @@ public class CuentaController implements Initializable{
          */
     }
 
+    public void onReporteMasVistos(){
+
+        try {
+            File file = new File(DESTINO_MAS_VISTOS);
+            file.getParentFile().mkdirs();
+            reporteVistos.createPdf(DESTINO_MAS_VISTOS, 1);
+            openFile(DESTINO_MAS_VISTOS);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void onReporteMejorEvaluados(){
+
+    }
+
+    public void onReporteEstadoCuenta(){
+
+    }
+
+
     public void OnGetReportes(ActionEvent actionEvent) {
 
         anPaneCuenta.setVisible(false);
@@ -248,5 +277,17 @@ public class CuentaController implements Initializable{
 
     public void onSubirVideo(ActionEvent actionEvent) {
     }
+
+    private void openFile(String filename) {
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File(filename);
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+            }
+        }
+    }
+
 }
 

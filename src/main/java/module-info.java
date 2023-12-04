@@ -11,6 +11,14 @@ module com.tecnm.you2be {
     requires javafx.graphics;
 
 
+    requires kernel;
+    requires layout;
+    requires org.slf4j;
+    requires org.apache.logging.log4j;
+
+    requires io;
+
+
 
     opens com.tecnm.you2be to javafx.fxml;
     opens com.tecnm.you2be.models;
