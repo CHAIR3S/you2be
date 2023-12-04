@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class CardVideo {
 
     private int idVideo;
@@ -14,7 +15,9 @@ public class CardVideo {
 
     private String descripcion;
 
-    private String link;
+    private String linkImage;
+
+    private String linkVideo;
 
     private String tipo;
 
