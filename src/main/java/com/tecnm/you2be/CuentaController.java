@@ -197,6 +197,8 @@ public class CuentaController implements Initializable{
         anPaneCuenta.setVisible(false);
         anPaneCompras.setVisible(true);
         lblTitle.setText("Mis compras");
+
+
     }
 
     public void onCuenta(ActionEvent actionEvent) {

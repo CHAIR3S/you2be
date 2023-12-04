@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tecnm.you2be.DAO.CardVideoDao;
 import com.tecnm.you2be.DAO.SubscripcionDao;
 import com.tecnm.you2be.DAO.UsuarioBuyVideoDao;
+import com.tecnm.you2be.DAO.UsuarioVerVideoDao;
 import com.tecnm.you2be.models.CardVideo;
 import com.tecnm.you2be.models.Subscripcion;
 import com.tecnm.you2be.models.Usuario;
+import com.tecnm.you2be.models.UsuarioVerVideo;
 import com.tecnm.you2be.youtube.models.Search;
 import com.tecnm.you2be.youtube.models.YoutubeResponse;
 import com.tecnm.you2be.youtube.service.YoutubeVideoService;
@@ -67,6 +69,8 @@ public class HelloController implements Initializable {
     private final CardVideoDao cardVideoDao = new CardVideoDao();
     private final UsuarioBuyVideoDao usuarioBuyVideoDao = new UsuarioBuyVideoDao();
     private final SubscripcionDao subscripcionDao = new SubscripcionDao();
+    private final UsuarioVerVideoDao usuarioVerVideoDao = new UsuarioVerVideoDao();
+    private CardVideo selectedCard;
     private double xOffset = 0;
     private double yOffset = 0;
 
@@ -83,11 +87,7 @@ public class HelloController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cargarUtilidadesDeVideos();
-//        listVideos = cardVideoDao.findAll();
-        listVideos = List.of(new CardVideo[]{
-                new CardVideo(2, "GIJUB", "El temach siendo madreado", "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png", "https://youtu.be/MJkdaVFHrto", "Payed", 30, "El macho" )
-
-        });
+        listVideos = cardVideoDao.findAll();
         imageListViewInit.getItems().addAll(listVideos);
         paneImages.setVisible(false);
         utilidadesDelListVies(imageListViewInit);
@@ -114,15 +114,33 @@ public class HelloController implements Initializable {
 
     @FXML
     void onLikeVideo(){
-
+        UsuarioVerVideo usuarioVerVideo = new UsuarioVerVideo();
+        usuarioVerVideo.setIdVideo(selectedCard.getIdVideo());
+        usuarioVerVideo.setStatus("favoritos");
+        usuarioVerVideo.setIdUsuario(this.usuario.getIdUsuario());
+        usuarioVerVideoDao.update(usuarioVerVideo);
     }
 
     @FXML
     void onDislikeVideo(){
+        UsuarioVerVideo usuarioVerVideo = new UsuarioVerVideo();
+        usuarioVerVideo.setIdVideo(selectedCard.getIdVideo());
+        usuarioVerVideo.setStatus("dislike");
+        usuarioVerVideo.setIdUsuario(this.usuario.getIdUsuario());
+        usuarioVerVideoDao.update(usuarioVerVideo);
+    }
 
+    @FXML
+    void actualizarEstadoVideo(){
+        UsuarioVerVideo usuarioVerVideo = new UsuarioVerVideo();
+        usuarioVerVideo.setIdVideo(selectedCard.getIdVideo());
+        usuarioVerVideo.setStatus("pendiente");
+        usuarioVerVideo.setIdUsuario(this.usuario.getIdUsuario());
+        usuarioVerVideoDao.update(usuarioVerVideo);
     }
 
     void play(String url){
+        actualizarEstadoVideo();
         Matcher matcher = pattern.matcher(url);
         paneVideos.setVisible(false);
         paneImages.setVisible(false);
@@ -143,17 +161,14 @@ public class HelloController implements Initializable {
         anPaneInicio.setVisible(true);
     }
     public void onMisVideosOpen(ActionEvent actionEvent) throws SQLException {
+        Usuario usuario = LoginController.getUsuarioActual();
         cargarUtilidadesDeVideos();
-//        listVideos = cardVideoDao.getAllMyVideos(this.usuario);
-
-        listVideos = List.of(new CardVideo[]{
-                new CardVideo(2, "GIJUB", "El temach siendo madreado", "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png", "https://youtu.be/MJkdaVFHrto", "Payed", 30, "El macho" )
-
-        });
-
+        listVideos = cardVideoDao.getAllMyVideos(usuario);
         finalizarUrilidadesDeVideos();
     }
     public void onFavoritosOpen(ActionEvent actionEvent) throws SQLException {
+
+
         cargarUtilidadesDeVideos();
         listVideos = cardVideoDao.getAllMyFavoriteVideos(this.usuario);
         finalizarUrilidadesDeVideos();
@@ -197,11 +212,12 @@ public class HelloController implements Initializable {
 
     @FXML
     void searchVideosInDatabase() throws SQLException {
+        Usuario usuario = LoginController.getUsuarioActual();
 
         if(txtBusqueda.getText().trim().isEmpty()){
             mostrarMensajeError("Ingresa texto para buscar en la base de datos");
         }else{
-            List<CardVideo> listVideos = cardVideoDao.getAllMyVideos(this.usuario, txtBusqueda.getText());
+            List<CardVideo> listVideos = cardVideoDao.getAllMyVideos(usuario, txtBusqueda.getText());
 
             if( listVideos.isEmpty() ){
                 mostrarMensajeError("No se encontro ningun video dentro de la base de datos");
@@ -218,7 +234,7 @@ public class HelloController implements Initializable {
 // Método para obtener datos del objet seleccionado de lista de videos
     public void handleListViewClick() {
         // Obtiene el ítem seleccionado
-        CardVideo selectedCard = imageListView.getSelectionModel().getSelectedItem();
+        selectedCard = imageListView.getSelectionModel().getSelectedItem();
 
         if (selectedCard != null) {
             // Accede al título del objeto, url, etc, lo que se necesite
@@ -231,20 +247,21 @@ public class HelloController implements Initializable {
         }
     }
     public void handleListViewInitClick(){
+        Usuario usuario = LoginController.getUsuarioActual();
 
         System.out.println("Llegue hasta aqui perro");
-        CardVideo selectedCard = imageListView.getSelectionModel().getSelectedItem();
+        selectedCard = imageListView.getSelectionModel().getSelectedItem();
 
         if( this.usuario == null ){
             mostrarMensajeError("No puedes acceder a esta funcionalidad en modo invitado");
         }
         else{
 
-            boolean usrWithCard = usuarioBuyVideoDao.checkIfUserHaveCard(this.usuario);
+            boolean usrWithCard = usuarioBuyVideoDao.checkIfUserHaveCard(usuario);
 
             if( usrWithCard ){
 
-                Subscripcion subUser = subscripcionDao.checkUserSubscription(this.usuario);
+                Subscripcion subUser = subscripcionDao.checkUserSubscription(usuario);
 
                 // Codigo para realizar compra
 
@@ -280,6 +297,8 @@ public class HelloController implements Initializable {
     }
 
     private void cargarUtilidadesDeVideos(){
+        Usuario usuario = LoginController.getUsuarioActual();
+
         if( usuario != null ){
             cerrarVentanas();
             anPaneMisVideos.setVisible(true);
@@ -308,23 +327,8 @@ public class HelloController implements Initializable {
     }
 
     public void informacionUsuario() {
-        Usuario usuario = LoginController.getUsuarioActual();
-        if (usuario != null) {
-            // Acceder a los detalles del usuario que inicio sesion
-            int idUsuario = usuario.getIdUsuario();
-            String nombre = usuario.getNombre();
-            String primerApellido = usuario.getPrimerApellido();
-            String segundoApellido = usuario.getSegundoApellido();
-            String correo = usuario.getEmail();
-            Date nacimiento = usuario.getNacimiento();
-
-            this.usuario = usuario;
-
-
-        } else {
-            mostrarMensajeError("Error al obtener informacion del usuario actual");
-            this.usuario = null;
-        }
+        // Acceder a los detalles del usuario que inicio sesion
+        this.usuario = LoginController.getUsuarioActual();
     }
 
     private void mostrarMensajeError(String mensaje) {
