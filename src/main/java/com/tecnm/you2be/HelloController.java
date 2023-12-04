@@ -40,7 +40,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HelloController implements Initializable {
-     private double xOffset = 0;
+    private double xOffset = 0;
     private double yOffset = 0;
 
     @FXML

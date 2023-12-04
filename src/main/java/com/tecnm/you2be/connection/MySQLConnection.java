@@ -11,7 +11,7 @@ public class MySQLConnection {
     private static String hostname   = "localhost";
     private static String dbname = "proy_tap";
     private static String dbport = "3306";
-    private static String dbuser = "root2";
+    private static String dbuser = "root";
     private static String dbpass = "Luischaip12";
 
 
