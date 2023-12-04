@@ -4,6 +4,7 @@ import com.tecnm.you2be.DAO.SubscripcionDao;
 import com.tecnm.you2be.models.Subscripcion;
 import com.tecnm.you2be.models.Usuario;
 import com.tecnm.you2be.reports.MasVistos;
+import com.tecnm.you2be.reports.MejorEvaluados;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -87,8 +88,13 @@ public class CuentaController implements Initializable{
 
      private MasVistos reporteVistos = new MasVistos();
 
+     private MejorEvaluados mejorEvaluados = new MejorEvaluados();
 
-    public static final String DESTINO_MAS_VISTOS = "results/TasksReport.pdf";
+
+    public static final String DESTINO_MAS_VISTOS = "results/MasVistosReporte.pdf";
+
+
+    public static final String DESTINO_MEJOR_EVALUADOS = "results/MejorEvaluadosReporte.pdf";
 
      private double xOffset = 0;
     private double yOffset = 0;
@@ -257,6 +263,15 @@ public class CuentaController implements Initializable{
     }
 
     public void onReporteMejorEvaluados(){
+
+        try {
+            File file = new File(DESTINO_MEJOR_EVALUADOS);
+            file.getParentFile().mkdirs();
+            mejorEvaluados.createPdf(DESTINO_MEJOR_EVALUADOS);
+            openFile(DESTINO_MEJOR_EVALUADOS);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

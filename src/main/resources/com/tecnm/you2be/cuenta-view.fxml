@@ -418,7 +418,7 @@
 
 
 
-                  <Button layoutX="304.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="Mejor evaluados">
+                  <Button layoutX="304.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReporteMejorEvaluados" text="Mejor evaluados">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                            <image>

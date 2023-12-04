@@ -12,13 +12,14 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import com.tecnm.you2be.DAO.VideoDao;
+import com.tecnm.you2be.models.EstadoCuenta;
 import com.tecnm.you2be.models.Video;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EstadoCuenta {
+public class EstadoCuentaReport {
 
     private Video video = new Video();
 
@@ -46,8 +47,8 @@ public class EstadoCuenta {
 
 
         //Crear lista para llenar filas
-        List<Video> oTaskList = videoDao.masVistos(idUsuario);
-        List<Video> oTableDTOList = new ArrayList<>();
+        List<EstadoCuenta> oEstadoCuentaList = videoDao.estadoCuenta(idUsuario);
+        List<EstadoCuenta> oTableDTOList = new ArrayList<>();
 
 //        oTaskList.forEach( task -> {
 //            List<Video> tagList = tagDao.findAllById(task.getId());
@@ -62,12 +63,16 @@ public class EstadoCuenta {
 
 
 
-        for( Video fila : oTableDTOList){
+        for( EstadoCuenta fila : oEstadoCuentaList){
             addTableRow(table, fila, font);
         }
 
+//        new EstadoCuenta(null, "", "", "", null, 21);
+//
+//        addTableRow(table, );
 
-        Paragraph title = new Paragraph("Tasks Report");
+
+        Paragraph title = new Paragraph("ESTADO DE CUENTA");
         title.setTextAlignment(TextAlignment.CENTER);
         title.setFont(bold);
         title.setFontSize(30);
@@ -88,12 +93,12 @@ public class EstadoCuenta {
         table.addHeaderCell(new Cell().add(new Paragraph("PRECIO").setFont(font)));
     }
 
-    private void addTableRow(Table table, Video video, PdfFont font) {
-        table.addCell(new Cell().add(new Paragraph(String.valueOf(video.getIdVideo())).setFont(font)));
-        table.addCell(new Cell().add(new Paragraph(String.valueOf(video.getTitulo())).setFont(font)));
-        table.addCell(new Cell().add(new Paragraph(String.valueOf(video.getDescripcion())).setFont(font)));
-        table.addCell(new Cell().add(new Paragraph(String.valueOf(video.getTipo())).setFont(font)));
-        table.addCell(new Cell().add(new Paragraph(String.valueOf(video.getPrecio())).setFont(font)));
+    private void addTableRow(Table table, EstadoCuenta estadoCuenta, PdfFont font) {
+        table.addCell(new Cell().add(new Paragraph(String.valueOf(estadoCuenta.getIdVideo())).setFont(font)));
+        table.addCell(new Cell().add(new Paragraph(String.valueOf(estadoCuenta.getTitulo())).setFont(font)));
+        table.addCell(new Cell().add(new Paragraph(String.valueOf(estadoCuenta.getDescripcion())).setFont(font)));
+        table.addCell(new Cell().add(new Paragraph(String.valueOf(estadoCuenta.getTipo())).setFont(font)));
+        table.addCell(new Cell().add(new Paragraph(String.valueOf(estadoCuenta.getPrecio())).setFont(font)));
 //        table.addCell(new Cell().add(new Paragraph(String.valueOf(video.getTagString())).setFont(font)));
     }
 }
