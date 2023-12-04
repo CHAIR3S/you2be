@@ -13,6 +13,7 @@ module com.tecnm.you2be {
 
 
     opens com.tecnm.you2be to javafx.fxml;
+    opens com.tecnm.you2be.models;
     exports com.tecnm.you2be.youtube.models;
     exports com.tecnm.you2be.youtube.service;
     exports com.tecnm.you2be;

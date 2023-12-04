@@ -148,7 +148,7 @@
                   <HBox layoutX="39.0" layoutY="72.0" prefHeight="66.0" prefWidth="803.0">
                      <children>
 
-                        <Button mnemonicParsing="false" onAction="#play" prefHeight="39.0" prefWidth="31.0" styleClass="buttonSearch">
+                        <Button mnemonicParsing="false" onAction="#searchVideosInDatabase" prefHeight="39.0" prefWidth="31.0" styleClass="buttonSearch">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -172,7 +172,7 @@
 
 
                   <!--Todo lo que va dentro del recuadro ponerlo adentro del pane-->
-                  <Pane fx:id="paneVideos" layoutX="39.0" layoutY="138.0" prefHeight="337.0" prefWidth="803.0">
+                  <Pane fx:id="" layoutX="39.0" layoutY="138.0" prefHeight="337.0" prefWidth="803.0">
 
 
                      <children>
@@ -186,7 +186,6 @@
                      <!-- Lista de videos de resultado -->
                      <ListView fx:id="imageListView"
                                prefWidth="800"  prefHeight="370" >
-
                      </ListView>
 
                   </Pane>
@@ -253,7 +252,7 @@
                       </HBox.margin></TextField>
                 </children>
              </HBox>
-             <Pane layoutX="39.0" layoutY="138.0" prefHeight="337.0" prefWidth="803.0">
+             <Pane fx:id="paneVideos" layoutX="39.0" layoutY="138.0" prefHeight="337.0" prefWidth="803.0">
                 <children>
                    <ImageView fitHeight="295.0" fitWidth="447.0" layoutX="244.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                       <image>
