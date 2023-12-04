@@ -2,6 +2,7 @@ package com.tecnm.you2be;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tecnm.you2be.models.CardVideo;
+import com.tecnm.you2be.models.Usuario;
 import com.tecnm.you2be.youtube.models.Search;
 import com.tecnm.you2be.youtube.models.YoutubeResponse;
 import com.tecnm.you2be.youtube.service.YoutubeVideoService;
@@ -33,6 +34,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -69,6 +71,8 @@ public class HelloController implements Initializable {
 
     @FXML
     private ListView<CardVideo> imageListView;
+
+    Usuario usuario = new Usuario();
 
     @FXML
     protected void onHelloButtonClick() {
@@ -299,5 +303,28 @@ public class HelloController implements Initializable {
         anPaneReproductor.setVisible(false);
         anPaneMisVideos.setVisible(false);
         anPaneInicio.setVisible(false);
+    }
+
+    public void informacionUsuario() {
+        Usuario usuario = LoginController.getUsuarioActual();
+        if (usuario != null) {
+            // Acceder a los detalles del usuario que inicio sesion
+            int idUsuario = usuario.getIdUsuario();
+            String nombre = usuario.getNombre();
+            String primerApellido = usuario.getPrimerApellido();
+            String segundoApellido = usuario.getSegundoApellido();
+            String correo = usuario.getEmail();
+            Date nacimiento = usuario.getNacimiento();
+        } else {
+            mostrarMensajeError("Error al obtener informacion del usuario actual");
+        }
+    }
+
+    private void mostrarMensajeError(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 }

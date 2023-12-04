@@ -76,11 +76,20 @@ public class UsuarioDao extends MySQLConnection implements Dao<Usuario> {
             ps.setString(5, record.getPassword());
             ps.setDate(6, new java.sql.Date(record.getNacimiento().getTime()));
             ps.execute();
-            return true;
+
+            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    record.setIdUsuario(generatedKeys.getInt(1));
+                } else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
+
+        return true;
     }
 
     @Override

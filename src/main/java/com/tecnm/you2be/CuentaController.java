@@ -1,5 +1,11 @@
 package com.tecnm.you2be;
 
+import com.tecnm.you2be.DAO.SubscripcionDao;
+import com.tecnm.you2be.models.Subscripcion;
+import com.tecnm.you2be.models.Usuario;
+import com.tecnm.you2be.reports.MasVistos;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,16 +13,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 
@@ -34,7 +43,7 @@ public class CuentaController implements Initializable{
     private Label lblNacimiento;
 
     @FXML
-    private ComboBox<?> cboTipo;
+    private ComboBox<String> cboTipo;
 
     @FXML
     private AnchorPane anPaneCompras;
@@ -74,15 +83,26 @@ public class CuentaController implements Initializable{
 
     @FXML
     private Button btnPagar;
+     Usuario usuario = new Usuario();
+
+     private MasVistos reporteVistos = new MasVistos();
 
 
+    public static final String DESTINO_MAS_VISTOS = "results/TasksReport.pdf";
 
      private double xOffset = 0;
     private double yOffset = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ObservableList<String> options = FXCollections.observableArrayList("premium", "basic");
+    cboTipo.setItems(options);
 
+    // También puedes seleccionar un valor por defecto si lo deseas
+    cboTipo.getSelectionModel().selectFirst(); // Esto seleccionará el primer valor ("premium") por defecto
+
+    // Agregar un listener al ComboBox para detectar cambios de selección
+    cboTipo.setOnAction(event -> actualizarCosto(cboTipo.getValue()));
     }
 
     @FXML
@@ -128,6 +148,25 @@ public class CuentaController implements Initializable{
         anPaneCuenta.setVisible(false);
         anPaneInformacion.setVisible(true);
         lblTitle.setText("Informacion de la cuenta");
+
+        Usuario usuario = LoginController.getUsuarioActual();
+        if (usuario != null) {
+            // Acceder a los detalles del usuario que inicio sesion
+            lblNombre.setText(usuario.getNombre() + " " + usuario.getPrimerApellido() + " " + usuario.getSegundoApellido());
+            lblEmail.setText(usuario.getEmail());
+            lblContraseña.setText(usuario.getPassword());
+            lblNacimiento.setText(String.valueOf(usuario.getNacimiento()));
+            lblUsuario.setText(String.valueOf(usuario.getIdUsuario()));
+        } else {
+            mostrarMensajeError("Error al obtener informacion del usuario actual");
+        }
+    }
+        private void mostrarMensajeError(String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
 
     public void OnGetVideos(ActionEvent actionEvent) {
@@ -159,22 +198,72 @@ public class CuentaController implements Initializable{
     }
 
     public void onActualizarAction(ActionEvent actionEvent) {
+
         lblTipo.setVisible(false);
         cboTipo.setVisible(true);
-        actualizarCosto();
         btnActualizar.setVisible(false);
         btnPagar.setVisible(true);
 
     }
 
-    private void actualizarCosto() {
-        //aquí se decidirá cual de los dos tipos está seleccionado y al momento
-        //que se seleccione en el combobox se actualizará el precio al seleccionado
+  private void actualizarCosto(String tipoSeleccionado) {
+    if (tipoSeleccionado != null) {
+        if (tipoSeleccionado.equals("premium")) {
+            lblCosto.setText("100");
+        } else if (tipoSeleccionado.equals("basic")) {
+            lblCosto.setText("50"); // Cambiar el valor según el tipo seleccionado
+        }
     }
+}
 
     public void onPagarAction(ActionEvent actionEvent) {
+        /*
+        // Suponiendo que tienes una instancia de SubscripcionDao llamada subscripcionDao
+    SubscripcionDao subscripcionDao = new SubscripcionDao();
+
+    // Suponiendo que tienes el ID del registro de subscripción que estás trabajando
+    int idSubscripcion = obtenerIdSubscripcion(); // Debes obtener el ID correspondiente
+
+    Optional<Subscripcion> subscripcionOptional = subscripcionDao.findById(idSubscripcion);
+
+    if (subscripcionOptional.isPresent()) {
+        Subscripcion subscripcion = subscripcionOptional.get();
+        int idPago = subscripcion.getIdPago();
+
+        if (idPago != 0) {
+            // idPago no es nulo, haz lo que necesites hacer si no es nulo
+            // Por ejemplo, algún tipo de lógica para manejar el pago ya realizado
+        } else {
+            // idPago es nulo, puedes hacer algo aquí
+            // Por ejemplo, permitir al usuario realizar un pago
+        }
+    } else {
+        // No se encontró la subscripción, maneja esta situación según tu lógica de negocio
+    }
+         */
+    }
+
+    public void onReporteMasVistos(){
+
+        try {
+            File file = new File(DESTINO_MAS_VISTOS);
+            file.getParentFile().mkdirs();
+            reporteVistos.createPdf(DESTINO_MAS_VISTOS, 1);
+            openFile(DESTINO_MAS_VISTOS);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
+
+    public void onReporteMejorEvaluados(){
+
+    }
+
+    public void onReporteEstadoCuenta(){
+
+    }
+
 
     public void OnGetReportes(ActionEvent actionEvent) {
 
@@ -182,5 +271,23 @@ public class CuentaController implements Initializable{
         anPaneReportes.setVisible(true);
         lblTitle.setText("Reportes");
     }
+
+    public void onAgregarTarjeta(ActionEvent actionEvent) {
+    }
+
+    public void onSubirVideo(ActionEvent actionEvent) {
+    }
+
+    private void openFile(String filename) {
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File(filename);
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+            }
+        }
+    }
+
 }
 

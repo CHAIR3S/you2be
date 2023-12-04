@@ -1,6 +1,8 @@
 package com.tecnm.you2be;
 
+import com.tecnm.you2be.DAO.CanalDao;
 import com.tecnm.you2be.DAO.UsuarioDao;
+import com.tecnm.you2be.models.Canal;
 import com.tecnm.you2be.models.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,8 +36,16 @@ public class registroController {
     private Stage stage;
 
     UsuarioDao usuarioDao = new UsuarioDao();
+    CanalDao canalDao = new CanalDao();
 
     LoginController lc = new LoginController();
+
+    String nombre;
+    String primeraAellido;
+    String segundoApellido;
+    String correo;
+    String contraseaña;
+    Date nacimiento;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -43,12 +53,12 @@ public class registroController {
 
     @FXML
     protected void registrarUsuario(ActionEvent event) {
-        String nombre = txtFieldNombre.getText();
-        String primeraAellido = txtFieldPrimerApellido.getText();
-        String segundoApellido = txtFieldSegundoApellido.getText();
-        String correo = txtFieldCorreo.getText();
-        String contraseaña = txtFieldContraseña.getText();
-        Date nacimiento = Date.valueOf(datePickerFechaNacimiento.getValue());
+        nombre = txtFieldNombre.getText();
+        primeraAellido = txtFieldPrimerApellido.getText();
+        segundoApellido = txtFieldSegundoApellido.getText();
+        correo = txtFieldCorreo.getText();
+        contraseaña = txtFieldContraseña.getText();
+        nacimiento = Date.valueOf(datePickerFechaNacimiento.getValue());
 
         // Validar que los campos no estén vacíos
         if (nombre.isEmpty() || primeraAellido.isEmpty()|| segundoApellido.isEmpty() || correo.isEmpty() || contraseaña.isEmpty() || nacimiento == null) {
@@ -67,7 +77,7 @@ public class registroController {
 
         // Guardar en la base de datos
         if (usuarioDao.save(nuevoUsuario)) {
-            mostrarAlerta("Usuario registrado exitosamente.");
+            mostrarAlerta("Usuario registrado exitosamente");
             limpiarCampos();
         } else {
             mostrarAlerta("Error al registrar el usuario. Por favor, inténtelo de nuevo.");

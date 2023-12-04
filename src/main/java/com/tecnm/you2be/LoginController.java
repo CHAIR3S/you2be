@@ -1,6 +1,8 @@
 package com.tecnm.you2be;
 
+import com.tecnm.you2be.DAO.SubscripcionDao;
 import com.tecnm.you2be.DAO.UsuarioDao;
+import com.tecnm.you2be.models.Subscripcion;
 import com.tecnm.you2be.models.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,8 +14,17 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.io.IOException;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.scene.Node;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 
 
 public class LoginController {
@@ -27,16 +38,29 @@ public class LoginController {
     @FXML
     PasswordField textFieldContraseña;
     UsuarioDao usuarioDao = new UsuarioDao();
+    SubscripcionDao subscripcionDao = new SubscripcionDao();
+
+    Usuario usuario = new Usuario();
+    private double xOffset = 0;
+    private double yOffset = 0;
+
+    private static Usuario usuarioActual;
+
+    public static Usuario getUsuarioActual() {
+        return usuarioActual;
+    }
 
     //Metodo para el boton d inicio de sesión
     @FXML
     protected void OnInicioSesion(ActionEvent event) {
         String email = txtCorreo.getText();
         String password = textFieldContraseña.getText();
+
         Optional<Usuario> optionalUsuario = usuarioDao.login(email, password);
 
         if (optionalUsuario.isPresent()) {
             mostrarMensaje("Inicio de sesion exitoso");
+            usuarioActual = optionalUsuario.get();
             abrirNuevaVentana("hello-view.fxml");
 
         } else {
@@ -70,19 +94,39 @@ public class LoginController {
 
     // Método para abrir una nueva ventana
     public void abrirNuevaVentana(String name) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(name));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
 
-            // Cerrar la ventana actual
-            cerrarVentanaActual();
-        } catch (IOException e) {
-            mostrarMensajeError("Error al cargar la nueva ventana");
-            e.printStackTrace();
-        }
+        //Aquí había un error de logica, se solucionó añadiendo el nombre de la pestaña que se quiere abrir con un string.format
+        String direccion = String.format("/com/tecnm/you2be/%s", name);
+    try {
+
+        // Código para abrir la nueva ventana
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(direccion));
+        Parent root = (Parent) fxmlLoader.load();
+
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.TRANSPARENT); // Establece la ventana sin bordes
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT); // Hace la escena transparente
+        stage.setScene(scene);
+        stage.show();
+
+        // Código para mover la ventana
+        root.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
+
+        // Cerrar la ventana actual
+        cerrarVentanaActual();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 
 

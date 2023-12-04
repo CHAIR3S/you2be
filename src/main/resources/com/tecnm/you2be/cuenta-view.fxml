@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tecnm.you2be.CuentaController">
+<AnchorPane style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tecnm.you2be.CuentaController">
 
 
 
@@ -38,7 +39,7 @@
             </VBox>
 
 
-
+<!-- Seccion del inicio____________________________________________________________________________________________________________________________________ -->
             <AnchorPane fx:id="anPaneCuenta" layoutX="91.0" layoutY="69.0" prefHeight="531.0" prefWidth="886.0" style="-fx-background-color: #131022; -fx-background-radius: 10;" stylesheets="@../../../styles/styles.css" visible="true">
                <children>
                   <VBox prefHeight="531.0" prefWidth="465.0">
@@ -90,17 +91,19 @@
                </children>
             </AnchorPane>
 
+<!-- Seccion de Informacion____________________________________________________________________________________________________________________________________ -->
+
 
             <AnchorPane fx:id="anPaneInformacion" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="false">
                <children>
                   <VBox alignment="CENTER" layoutX="120.0" layoutY="14.0" prefHeight="451.0" prefWidth="651.0">
                      <children>
 
-                        <Label fx:id="lblNombre" alignment="CENTER" styleClass="labelNames" text="Nombre">
+                        <Label alignment="CENTER" styleClass="labelNames" text="Nombre">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin></Label>
-                        <Label styleClass="labelDescription">
+                        <Label fx:id="lblNombre" styleClass="labelDescription">
                            <VBox.margin>
                               <Insets bottom="20.0" />
                            </VBox.margin></Label>
@@ -108,32 +111,32 @@
                         <Line endX="300.0" startX="-100.0" stroke="#4c3273" strokeWidth="5" />
 
 
-                        <Label fx:id="lblEmail" styleClass="labelNames" text="email" />
-                        <Label styleClass="labelDescription">
+                        <Label styleClass="labelNames" text="email" />
+                        <Label fx:id="lblEmail" styleClass="labelDescription">
                            <VBox.margin>
                               <Insets bottom="20.0" />
                            </VBox.margin></Label>
 
                         <Line endX="300.0" startX="-100.0" stroke="#4c3273" strokeWidth="5" />
 
-                        <Label fx:id="lblContraseña" styleClass="labelNames" text="Password" />
-                        <Label styleClass="labelDescription">
+                        <Label styleClass="labelNames" text="Password" />
+                        <Label fx:id="lblContraseña" styleClass="labelDescription">
                            <VBox.margin>
                               <Insets bottom="20.0" />
                            </VBox.margin></Label>
 
                         <Line endX="300.0" startX="-100.0" stroke="#4c3273" strokeWidth="5" />
 
-                        <Label fx:id="lblNacimiento" styleClass="labelNames" text="Nacimiento" />
-                        <Label styleClass="labelDescription">
+                        <Label styleClass="labelNames" text="Nacimiento" />
+                        <Label fx:id="lblNacimiento" styleClass="labelDescription">
                            <VBox.margin>
                               <Insets bottom="20.0" />
                            </VBox.margin></Label>
 
                         <Line endX="300.0" startX="-100.0" stroke="#4c3273" strokeWidth="5" />
 
-                        <Label fx:id="lblUsuario" styleClass="labelNames" text="Usuario" />
-                        <Label styleClass="labelDescription" />
+                        <Label styleClass="labelNames" text="Usuario" />
+                        <Label fx:id="lblUsuario" styleClass="labelDescription" />
                      </children>
                   </VBox>
 
@@ -155,10 +158,71 @@
 
 
 
+<!-- Seccion de misVideos____________________________________________________________________________________________________________________________________ -->
+
 
             <AnchorPane fx:id="anPaneMisVideos" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="false">
                <children>
                   <VBox alignment="CENTER" layoutX="120.0" layoutY="14.0" prefHeight="451.0" prefWidth="651.0">
+                     <children>
+                        <TextField fx:id="txtUrl1" prefHeight="42.0" prefWidth="654.0" styleClass="text-field-search">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                     <TextField fx:id="txtUrl" prefHeight="42.0" prefWidth="654.0" styleClass="text-field-search">
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </TextField>
+
+
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="labelDescription" text="TITULO" />
+                              <TextField fx:id="txtTituloVideo">
+                                 <HBox.margin>
+                                    <Insets left="130.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="labelDescription" text="DESCRIPCION" />
+                              <TextField fx:id="txtDescripcionVideo">
+                                 <HBox.margin>
+                                    <Insets left="130.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="labelDescription" text="TIPO" />
+                              <TextField fx:id="txtTipoVideo">
+                                 <HBox.margin>
+                                    <Insets left="130.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="labelDescription" text="PRECIO" />
+                              <TextField fx:id="txtPrecio">
+                                 <HBox.margin>
+                                    <Insets left="130.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <Button mnemonicParsing="false" onAction="#onSubirVideo" style="-fx-background-color: #4c3273;" text="Subir Video" textFill="WHITE">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Button>
+                     </children>
                   </VBox>
 
 
@@ -177,7 +241,7 @@
                </children>
             </AnchorPane>
 
-
+<!-- Seccion de Suscripciones____________________________________________________________________________________________________________________________________ -->
             <AnchorPane fx:id="anPaneSuscripcion" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="false">
                <children>
 
@@ -232,6 +296,74 @@
             </AnchorPane>
 
 
+            <!-- Seccion de tarjeta____________________________________________________________________________________________________________________________________ -->
+
+
+            <AnchorPane fx:id="anPaneTarjeta" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="false">
+               <children>
+
+
+                  <VBox alignment="CENTER" layoutX="120.0" layoutY="18.0" prefHeight="451.0" prefWidth="451.0" AnchorPane.topAnchor="16.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="NUMERO DE TARJETA:">
+                                 <styleClass>
+                                    <String fx:value="labelNames" />
+                                    <String fx:value="labelDescription" />
+                                 </styleClass>
+                              </Label>
+                              <TextField fx:id="txtNoTarjeta">
+                                 <HBox.margin>
+                                    <Insets left="30.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="labelDescription" text="CVV:" />
+                              <TextField fx:id="txtCVV">
+                                 <HBox.margin>
+                                    <Insets left="130.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label styleClass="labelDescription" text="TIPO" />
+                              <TextField fx:id="txtTipoTarjeta">
+                                 <HBox.margin>
+                                    <Insets left="130.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children></VBox>
+
+
+
+                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="regresar">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/return.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutX="639.0" layoutY="187.0" mnemonicParsing="false" onAction="#onAgregarTarjeta" style="-fx-background-color: #4C3273FF;" text="Agregar Tarjeta" textFill="WHITE">
+                     <font>
+                        <Font name="Arial Rounded MT Bold" size="13.0" />
+                     </font>
+                  </Button>
+
+
+               </children>
+            </AnchorPane>
+<!-- Seccion de Compras____________________________________________________________________________________________________________________________________ -->
+
 
             <AnchorPane fx:id="anPaneCompras" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="´false´">
                <children>
@@ -254,6 +386,7 @@
                </children>
             </AnchorPane>
 
+<!-- Seccion de Reportes____________________________________________________________________________________________________________________________________ -->
 
             <AnchorPane fx:id="anPaneReportes" layoutX="91.0" layoutY="113.0" prefHeight="487.0" prefWidth="886.0" styleClass="anchor-pane" stylesheets="@../../../styles/styles.css" visible="´false´">
                <children>
@@ -271,6 +404,42 @@
                         </ImageView>
                      </graphic>
                   </Button>
+
+
+                  <Button layoutX="164.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReporteMasVistos" text="Más vistos">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/micuenta.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+
+
+
+                  <Button layoutX="304.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="Mejor evaluados">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/micuenta.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+
+
+
+                  <Button layoutX="474.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="Estado de cuenta">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/micuenta.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+
 
 
                </children>
