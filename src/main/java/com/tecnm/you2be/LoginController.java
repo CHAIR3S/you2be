@@ -1,6 +1,8 @@
 package com.tecnm.you2be;
 
+import com.tecnm.you2be.DAO.SubscripcionDao;
 import com.tecnm.you2be.DAO.UsuarioDao;
+import com.tecnm.you2be.models.Subscripcion;
 import com.tecnm.you2be.models.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +14,9 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.io.IOException;
 import javafx.scene.paint.Color;
@@ -33,6 +38,7 @@ public class LoginController {
     @FXML
     PasswordField textFieldContraseña;
     UsuarioDao usuarioDao = new UsuarioDao();
+    SubscripcionDao subscripcionDao = new SubscripcionDao();
 
     Usuario usuario = new Usuario();
     private double xOffset = 0;
@@ -49,6 +55,7 @@ public class LoginController {
     protected void OnInicioSesion(ActionEvent event) {
         String email = txtCorreo.getText();
         String password = textFieldContraseña.getText();
+
         Optional<Usuario> optionalUsuario = usuarioDao.login(email, password);
 
         if (optionalUsuario.isPresent()) {
@@ -88,9 +95,12 @@ public class LoginController {
     // Método para abrir una nueva ventana
     public void abrirNuevaVentana(String name) {
 
+        //Aquí había un error de logica, se solucionó añadiendo el nombre de la pestaña que se quiere abrir con un string.format
+        String direccion = String.format("/com/tecnm/you2be/%s", name);
     try {
+
         // Código para abrir la nueva ventana
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/tecnm/you2be/hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(direccion));
         Parent root = (Parent) fxmlLoader.load();
 
         Stage stage = new Stage();

@@ -15,6 +15,7 @@ public class SubscripcionDao extends MySQLConnection implements Dao<Subscripcion
     private String table = "subscripcion";
 
 
+
     @Override
     public Optional<Subscripcion> findById(int id) {
         Optional<Subscripcion> optionalSubscripcion = Optional.empty();
@@ -60,6 +61,7 @@ public class SubscripcionDao extends MySQLConnection implements Dao<Subscripcion
         return subscripcionList;
     }
 
+
     @Override
     public boolean save(Subscripcion record) {
         String query = "insert into " + table + " (costo, tipo, id_usuario, id_pago) values (?, ?, ?, ?)";
@@ -76,6 +78,8 @@ public class SubscripcionDao extends MySQLConnection implements Dao<Subscripcion
         }
         return false;
     }
+
+
 
     @Override
     public boolean update(Subscripcion record) {
