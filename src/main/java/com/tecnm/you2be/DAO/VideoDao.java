@@ -200,6 +200,7 @@ public class VideoDao extends MySQLConnection implements Dao<Video>  {
         try {
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setInt(1, id);
+            statement.setInt(2, id);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 EstadoCuenta estadoCuenta = new EstadoCuenta();
@@ -208,7 +209,7 @@ public class VideoDao extends MySQLConnection implements Dao<Video>  {
                 estadoCuenta.setDescripcion(rs.getString("descripcion"));
                 estadoCuenta.setTipo(rs.getString("tipo"));
                 estadoCuenta.setPrecio(rs.getBigDecimal("precio"));
-                estadoCuenta.setPrecioTotal(rs.getBigDecimal("b"));
+                estadoCuenta.setPrecioTotal(rs.getBigDecimal("total_price"));
                 estadoCuentaList.add(estadoCuenta);
             }
         } catch (SQLException e) {

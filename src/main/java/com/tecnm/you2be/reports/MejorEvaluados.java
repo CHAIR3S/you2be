@@ -46,7 +46,7 @@ public class MejorEvaluados {
 
 
         //Crear lista para llenar filas
-        List<Video> oTaskList = videoDao.mejorEvaluados();
+        List<Video> oEvaluados = videoDao.mejorEvaluados();
         List<Video> oTableDTOList = new ArrayList<>();
 
 //        oTaskList.forEach( task -> {
@@ -62,7 +62,7 @@ public class MejorEvaluados {
 
 
 
-        for( Video fila : oTableDTOList){
+        for( Video fila : oEvaluados){
             addTableRow(table, fila, font);
         }
 

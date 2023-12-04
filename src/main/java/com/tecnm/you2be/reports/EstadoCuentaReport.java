@@ -40,7 +40,7 @@ public class EstadoCuentaReport {
 
         PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
         PdfFont bold = PdfFontFactory.createFont(StandardFonts.HELVETICA_BOLD);
-        Table table = new Table(UnitValue.createPercentArray(new float[]{2,4,4,4,2,4}))
+        Table table = new Table(UnitValue.createPercentArray(new float[]{2,4,4,4,2}))
                 .useAllAvailableWidth();
 
         addTableHeaders(table, bold);

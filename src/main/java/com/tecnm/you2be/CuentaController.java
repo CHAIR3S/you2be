@@ -3,6 +3,7 @@ package com.tecnm.you2be;
 import com.tecnm.you2be.DAO.SubscripcionDao;
 import com.tecnm.you2be.models.Subscripcion;
 import com.tecnm.you2be.models.Usuario;
+import com.tecnm.you2be.reports.EstadoCuentaReport;
 import com.tecnm.you2be.reports.MasVistos;
 import com.tecnm.you2be.reports.MejorEvaluados;
 import javafx.collections.FXCollections;
@@ -90,11 +91,16 @@ public class CuentaController implements Initializable{
 
      private MejorEvaluados mejorEvaluados = new MejorEvaluados();
 
+     private EstadoCuentaReport estadoCuentaReport = new EstadoCuentaReport();
+
 
     public static final String DESTINO_MAS_VISTOS = "results/MasVistosReporte.pdf";
 
 
     public static final String DESTINO_MEJOR_EVALUADOS = "results/MejorEvaluadosReporte.pdf";
+
+
+    public static final String DESTINO_ESTADO_CUENTA = "results/EstadoCuenta.pdf";
 
      private double xOffset = 0;
     private double yOffset = 0;
@@ -254,7 +260,7 @@ public class CuentaController implements Initializable{
         try {
             File file = new File(DESTINO_MAS_VISTOS);
             file.getParentFile().mkdirs();
-            reporteVistos.createPdf(DESTINO_MAS_VISTOS, 1);
+            reporteVistos.createPdf(DESTINO_MAS_VISTOS, usuario.getIdUsuario());
             openFile(DESTINO_MAS_VISTOS);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -276,6 +282,15 @@ public class CuentaController implements Initializable{
     }
 
     public void onReporteEstadoCuenta(){
+
+        try {
+            File file = new File(DESTINO_ESTADO_CUENTA);
+            file.getParentFile().mkdirs();
+            estadoCuentaReport.createPdf(DESTINO_ESTADO_CUENTA, usuario.getIdUsuario());
+            openFile(DESTINO_ESTADO_CUENTA);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
