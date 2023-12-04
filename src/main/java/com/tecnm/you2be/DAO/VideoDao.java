@@ -113,4 +113,39 @@ public class VideoDao extends MySQLConnection implements Dao<Video>  {
             throw new RuntimeException(e);
         }
     }
+
+    public List<Video> masVistos(int id){
+
+        List<Video> videoList = new ArrayList<>();
+        String query = "SELECT v.* " +
+                "FROM video AS v " +
+                "JOIN ( " +
+                "    SELECT id_video " +
+                "    FROM usuario_ver_video " +
+                "    WHERE id_usuario = ? " +
+                "    GROUP BY id_video " +
+                "    ORDER BY COUNT(*) DESC " +
+                "    LIMIT 10 " +
+                ") AS subquery ON v.id_video = subquery.id_video;";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Video video = new Video();
+                video.setIdVideo(rs.getInt("id_video"));
+                video.setTitulo(rs.getString("titulo"));
+                video.setDescripcion(rs.getString("descripcion"));
+                video.setLink(rs.getString("link"));
+                video.setTipo(rs.getString("tipo"));
+                video.setPrecio(rs.getBigDecimal("precio"));
+                video.setIdCanal(rs.getInt("id_canal"));
+                videoList.add(video);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return videoList;
+
+    }
 }

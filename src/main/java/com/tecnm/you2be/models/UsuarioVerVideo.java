@@ -15,6 +15,6 @@ public class UsuarioVerVideo {
 
     private int idVideo;
 
-    private int idStatus;
+    private String status;
 
 }

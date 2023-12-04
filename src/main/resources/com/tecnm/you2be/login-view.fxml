@@ -72,7 +72,7 @@
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Button>
-                <Hyperlink fx:id="hyperlinkInvitado"  alignment="CENTER" layoutX="309.0" layoutY="586.0" prefHeight="51.0" prefWidth="95.0" text="INVITADO" textFill="#b153f5">
+                <Hyperlink fx:id="hyperlinkInvitado"  alignment="CENTER" layoutX="309.0" layoutY="586.0" prefHeight="51.0" prefWidth="95.0" text="INVITADO" textFill="#b153f5" onAction="#OnInvitado">
                     <font>
                         <Font size="18.0" />
                     </font>

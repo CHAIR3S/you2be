@@ -406,6 +406,42 @@
                   </Button>
 
 
+                  <Button layoutX="164.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReporteMasVistos" text="Más vistos">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/micuenta.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+
+
+
+                  <Button layoutX="304.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="Mejor evaluados">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/micuenta.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+
+
+
+                  <Button layoutX="474.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="Estado de cuenta">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/micuenta.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+
+
+
                </children>
             </AnchorPane>
 

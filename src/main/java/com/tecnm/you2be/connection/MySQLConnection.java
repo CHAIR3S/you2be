@@ -12,7 +12,7 @@ public class MySQLConnection {
     private static String dbname = "proy_tap";
     private static String dbport = "3306";
     private static String dbuser = "root";
-    private static String dbpass = "gA#/03Ls";
+    private static String dbpass = "Luischaip12";
 
 
     public static void Connect() {
