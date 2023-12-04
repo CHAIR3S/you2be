@@ -257,10 +257,13 @@ public class CuentaController implements Initializable{
 
     public void onReporteMasVistos(){
 
+
+        Usuario newUser = LoginController.getUsuarioActual();
+
         try {
             File file = new File(DESTINO_MAS_VISTOS);
             file.getParentFile().mkdirs();
-            reporteVistos.createPdf(DESTINO_MAS_VISTOS, usuario.getIdUsuario());
+            reporteVistos.createPdf(DESTINO_MAS_VISTOS, newUser.getIdUsuario());
             openFile(DESTINO_MAS_VISTOS);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -283,10 +286,12 @@ public class CuentaController implements Initializable{
 
     public void onReporteEstadoCuenta(){
 
+        Usuario newUser = LoginController.getUsuarioActual();
+
         try {
             File file = new File(DESTINO_ESTADO_CUENTA);
             file.getParentFile().mkdirs();
-            estadoCuentaReport.createPdf(DESTINO_ESTADO_CUENTA, usuario.getIdUsuario());
+            estadoCuentaReport.createPdf(DESTINO_ESTADO_CUENTA, newUser.getIdUsuario());
             openFile(DESTINO_ESTADO_CUENTA);
         } catch (IOException e) {
             throw new RuntimeException(e);

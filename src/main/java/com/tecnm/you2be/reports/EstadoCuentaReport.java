@@ -16,6 +16,7 @@ import com.tecnm.you2be.models.EstadoCuenta;
 import com.tecnm.you2be.models.Video;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,14 +63,19 @@ public class EstadoCuentaReport {
 //        } );
 
 
+        BigDecimal total = BigDecimal.valueOf(0);
 
         for( EstadoCuenta fila : oEstadoCuentaList){
             addTableRow(table, fila, font);
+            total = fila.getPrecioTotal();
         }
 
-//        new EstadoCuenta(null, "", "", "", null, 21);
-//
-//        addTableRow(table, );
+
+        table.addCell(new Cell().add(new Paragraph()));
+        table.addCell(new Cell().add(new Paragraph()));
+        table.addCell(new Cell().add(new Paragraph()));
+        table.addCell(new Cell().add(new Paragraph("TOTAL:")));
+        table.addCell(new Cell().add(new Paragraph(total.toString())));
 
 
         Paragraph title = new Paragraph("ESTADO DE CUENTA");
