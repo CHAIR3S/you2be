@@ -14,6 +14,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.util.Optional;
 import java.io.IOException;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.scene.Node;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 
 
 public class LoginController {
@@ -29,6 +35,8 @@ public class LoginController {
     UsuarioDao usuarioDao = new UsuarioDao();
 
     Usuario usuario = new Usuario();
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     private static Usuario usuarioActual;
 
@@ -79,19 +87,36 @@ public class LoginController {
 
     // Método para abrir una nueva ventana
     public void abrirNuevaVentana(String name) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(name));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
 
-            // Cerrar la ventana actual
-            cerrarVentanaActual();
-        } catch (IOException e) {
-            mostrarMensajeError("Error al cargar la nueva ventana");
-            e.printStackTrace();
-        }
+    try {
+        // Código para abrir la nueva ventana
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/tecnm/you2be/hello-view.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.TRANSPARENT); // Establece la ventana sin bordes
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT); // Hace la escena transparente
+        stage.setScene(scene);
+        stage.show();
+
+        // Código para mover la ventana
+        root.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
+
+        // Cerrar la ventana actual
+        cerrarVentanaActual();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 
 
