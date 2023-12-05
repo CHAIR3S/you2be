@@ -151,7 +151,7 @@ public class HelloController implements Initializable {
         usuarioVerVideo.setIdVideo(selectedCard.getIdVideo());
         usuarioVerVideo.setStatus("favoritos");
         usuarioVerVideo.setIdUsuario(this.usuario.getIdUsuario());
-        usuarioVerVideoDao.update( usuarioVerVideo);
+        usuarioVerVideoDao.insertUpdate(this.usuario, selectedCard,  usuarioVerVideo);
     }
 
     @FXML
@@ -160,7 +160,7 @@ public class HelloController implements Initializable {
         usuarioVerVideo.setIdVideo(selectedCard.getIdVideo());
         usuarioVerVideo.setStatus("dislike");
         usuarioVerVideo.setIdUsuario(this.usuario.getIdUsuario());
-        usuarioVerVideoDao.update(usuarioVerVideo);
+        usuarioVerVideoDao.insertUpdate(this.usuario, selectedCard,  usuarioVerVideo);
     }
 
     @FXML
