@@ -112,9 +112,9 @@ public class UsuarioVerVideoDao extends MySQLConnection implements Dao<UsuarioVe
             ps.setInt(2, vd.getIdVideo());
 
             if( ps.execute() ){
-                update(record);
+                save(record);
             }
-            else save(record);
+            else update(record);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

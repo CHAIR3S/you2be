@@ -1,8 +1,7 @@
 package com.tecnm.you2be;
 
-import com.tecnm.you2be.DAO.SubscripcionDao;
-import com.tecnm.you2be.models.Subscripcion;
-import com.tecnm.you2be.models.Usuario;
+import com.tecnm.you2be.DAO.*;
+import com.tecnm.you2be.models.*;
 import com.tecnm.you2be.reports.EstadoCuentaReport;
 import com.tecnm.you2be.reports.MasVistos;
 import com.tecnm.you2be.reports.MejorEvaluados;
@@ -108,8 +107,8 @@ public class CuentaController implements Initializable{
     @FXML
     private AnchorPane anPaneInformacion;
 
-    @FXML
-    private Label lblContraseña;
+//    @FXML
+//    private Label lblContraseña;
 
     @FXML
     private Label lblEmail;
@@ -135,8 +134,8 @@ public class CuentaController implements Initializable{
     @FXML
     private Label lblCosto;
 
-    @FXML
-    private AnchorPane anPaneMisVideos;
+//    @FXML
+//    private AnchorPane anPaneMisVideos;
 
     @FXML
     private Label lblTipo;

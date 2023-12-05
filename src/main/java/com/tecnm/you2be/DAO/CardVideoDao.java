@@ -87,7 +87,6 @@ public class CardVideoDao extends MySQLConnection implements Dao<CardVideo> {
 
             CardVideo cd = new CardVideo();
 
-            System.out.println("valio verga la query de los videos");
             cd.setIdVideo(rsu.getInt("id_video"));
             cd.setTipo(rsu.getString("tipo"));
             String[] links = rsu.getString("link").split(" ");
