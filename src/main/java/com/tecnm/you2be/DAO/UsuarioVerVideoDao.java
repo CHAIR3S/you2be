@@ -1,7 +1,10 @@
 package com.tecnm.you2be.DAO;
 
 import com.tecnm.you2be.connection.MySQLConnection;
+import com.tecnm.you2be.models.CardVideo;
+import com.tecnm.you2be.models.Usuario;
 import com.tecnm.you2be.models.UsuarioVerVideo;
+import com.tecnm.you2be.models.Video;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,14 +20,14 @@ public class UsuarioVerVideoDao extends MySQLConnection implements Dao<UsuarioVe
     @Override
     public Optional<UsuarioVerVideo> findById(int id) {
         Optional<UsuarioVerVideo> optionalUsuarioVerVideo = Optional.empty();
-        String query = "select * from " + table + " where id_usuario_video = ?";
+        String query = "select * from " + table + " where id_usurio_video = ?";
         try {
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 UsuarioVerVideo usuarioVerVideo = new UsuarioVerVideo();
-                usuarioVerVideo.setIdUsuarioVideo(rs.getInt("id_usuario_video"));
+                usuarioVerVideo.setIdUsuarioVideo(rs.getInt("id_usurio_video"));
                 usuarioVerVideo.setIdUsuario(rs.getInt("id_usuario"));
                 usuarioVerVideo.setIdVideo(rs.getInt("id_video"));
                 usuarioVerVideo.setStatus(rs.getString("status"));
@@ -45,7 +48,7 @@ public class UsuarioVerVideoDao extends MySQLConnection implements Dao<UsuarioVe
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 UsuarioVerVideo usuarioVerVideo = new UsuarioVerVideo();
-                usuarioVerVideo.setIdUsuarioVideo(rs.getInt("id_usuario_video"));
+                usuarioVerVideo.setIdUsuarioVideo(rs.getInt("id_usurio_video"));
                 usuarioVerVideo.setIdUsuario(rs.getInt("id_usuario"));
                 usuarioVerVideo.setIdVideo(rs.getInt("id_video"));
                 usuarioVerVideo.setStatus(rs.getString("status"));
@@ -73,9 +76,12 @@ public class UsuarioVerVideoDao extends MySQLConnection implements Dao<UsuarioVe
         return false;
     }
 
+
+
     @Override
     public boolean update(UsuarioVerVideo record) {
-        String query = "update " + table + " set id_usuario=?, id_video=?, status=? where id_usuario_video = ?";
+
+        String query = "update " + table + " set id_usuario=?, id_video=?, status=? where id_usurio_video = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, record.getIdUsuario());
@@ -92,7 +98,7 @@ public class UsuarioVerVideoDao extends MySQLConnection implements Dao<UsuarioVe
 
     @Override
     public boolean delete(int id) {
-        String query = "delete from " + table + " where id_usuario_video = ?";
+        String query = "delete from " + table + " where id_usurio_video = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, id);
@@ -103,5 +109,20 @@ public class UsuarioVerVideoDao extends MySQLConnection implements Dao<UsuarioVe
         }
     }
 
+    public void insertUpdate(Usuario usr, CardVideo vd, UsuarioVerVideo record){
+        String query = "select uvv.id_usurio_video from usuario_ver_video uvv where uvv.id_usuario = ? and uvv.id_video = ?";
 
+        try{
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, usr.getIdUsuario());
+            ps.setInt(2, vd.getIdVideo());
+
+            if( ps.execute() ){
+                update(record);
+            }
+            else save(record);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

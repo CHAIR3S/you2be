@@ -105,11 +105,44 @@ public class HelloController implements Initializable {
             if(matcher.find()){
                 this.url ="https://www.youtube.com/embed/"+matcher.group(0);
                 webView.getEngine().load(this.url);
+                actualizarEstadoVideo();
                 System.out.println(this.url);
             }else{
                 System.out.println("Invalid Url!");
             }
         }
+    }
+    void play(String url){
+        actualizarEstadoVideo();
+        Matcher matcher = pattern.matcher(url);
+        paneVideos.setVisible(false);
+        paneImages.setVisible(false);
+        webViewReproductor.setVisible(true);
+        if(matcher.find()){
+            this.url ="https://www.youtube.com/embed/"+matcher.group(0);
+            actualizarEstadoVideo();
+            webViewReproductor.getEngine().load(this.url);
+            System.out.println(this.url);
+        }else{
+            mostrarMensajeError("Invalid Url!");
+        }
+    }
+
+    void playFreeVideo(String url){
+
+        Matcher matcher = pattern.matcher(url);
+        paneImages.setVisible(false);
+        imageListViewInit.setVisible(false);
+        webView.setVisible(true);
+        actualizarEstadoVideo();
+        if(matcher.find()){
+            this.url ="https://www.youtube.com/embed/"+matcher.group(0);
+            webView.getEngine().load(this.url);
+            System.out.println(this.url);
+        }else{
+            System.out.println("Invalid Url!");
+        }
+
     }
 
     @FXML
@@ -118,7 +151,7 @@ public class HelloController implements Initializable {
         usuarioVerVideo.setIdVideo(selectedCard.getIdVideo());
         usuarioVerVideo.setStatus("favoritos");
         usuarioVerVideo.setIdUsuario(this.usuario.getIdUsuario());
-        usuarioVerVideoDao.update(usuarioVerVideo);
+        usuarioVerVideoDao.insertUpdate( this.usuario, selectedCard, usuarioVerVideo);
     }
 
     @FXML
@@ -136,24 +169,11 @@ public class HelloController implements Initializable {
         usuarioVerVideo.setIdVideo(selectedCard.getIdVideo());
         usuarioVerVideo.setStatus("pendiente");
         usuarioVerVideo.setIdUsuario(this.usuario.getIdUsuario());
-        usuarioVerVideoDao.update(usuarioVerVideo);
+        usuarioVerVideoDao.insertUpdate (this.usuario, selectedCard ,usuarioVerVideo);
     }
 
-    void play(String url){
-        actualizarEstadoVideo();
-        Matcher matcher = pattern.matcher(url);
-        paneVideos.setVisible(false);
-        paneImages.setVisible(false);
-        webViewReproductor.setVisible(true);
-        if(matcher.find()){
-            this.url ="https://www.youtube.com/embed/"+matcher.group(0);
 
-            webViewReproductor.getEngine().load(this.url);
-            System.out.println(this.url);
-        }else{
-            mostrarMensajeError("Invalid Url!");
-        }
-    }
+
 
 
     public void onInicioOpen(ActionEvent actionEvent) {
@@ -249,36 +269,46 @@ public class HelloController implements Initializable {
     public void handleListViewInitClick(){
         Usuario usuario = LoginController.getUsuarioActual();
 
-        System.out.println("Llegue hasta aqui perro");
-        selectedCard = imageListView.getSelectionModel().getSelectedItem();
+        selectedCard = imageListViewInit.getSelectionModel().getSelectedItem();
 
-        if( this.usuario == null ){
-            mostrarMensajeError("No puedes acceder a esta funcionalidad en modo invitado");
+        if(  selectedCard.getTipo().equalsIgnoreCase("paid") ){
+            mostrarMensajeError("No puedes acceder a esta funcionalidad ");
+        }
+        else if ( selectedCard.getTipo().equalsIgnoreCase("free")){
+            playFreeVideo(selectedCard.getLinkVideo());
         }
         else{
 
+
             boolean usrWithCard = usuarioBuyVideoDao.checkIfUserHaveCard(usuario);
 
-            if( usrWithCard ){
+            if( usrWithCard ) {
 
                 Subscripcion subUser = subscripcionDao.checkUserSubscription(usuario);
+            }else
+
+            boolean usrWithCard = usuarioBuyVideoDao.checkIfUserHaveCard(this.usuario);
+            if( usrWithCard ){
+                Subscripcion subUser = subscripcionDao.checkUserSubscription(this.usuario);
 
                 // Codigo para realizar compra
-
             } else {
-                try{
-                    // Código para abrir la nueva ventana
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/tecnm/you2be/cuenta-view.fxml"));
-                    Parent root = (Parent) fxmlLoader.load();
+                if( !selectedCard.getTipo().equals("free")){
 
-                    Stage stage = new Stage();
-                    stage.initStyle(StageStyle.TRANSPARENT); // Establece la ventana sin bordes
-                    Scene scene = new Scene(root);
-                    scene.setFill(Color.TRANSPARENT); // Hace la escena transparente
-                    stage.setScene(scene);
-                    stage.show();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    try{
+                        // Código para abrir la nueva ventana
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/tecnm/you2be/cuenta-view.fxml"));
+                        Parent root = (Parent) fxmlLoader.load();
+
+                        Stage stage = new Stage();
+                        stage.initStyle(StageStyle.TRANSPARENT); // Establece la ventana sin bordes
+                        Scene scene = new Scene(root);
+                        scene.setFill(Color.TRANSPARENT); // Hace la escena transparente
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         }
