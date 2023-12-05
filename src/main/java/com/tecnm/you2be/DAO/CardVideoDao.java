@@ -155,8 +155,6 @@ public class CardVideoDao extends MySQLConnection implements Dao<CardVideo> {
 
         while( rsu.next() ){
 
-
-
             CardVideo cd = new CardVideo();
 
             cd.setIdVideo(rsu.getInt("id_video"));
@@ -173,8 +171,6 @@ public class CardVideoDao extends MySQLConnection implements Dao<CardVideo> {
             cd.setCanal(rsu.getString("nombre"));
 
             listVideos.add(cd);
-
-
         }
         return listVideos;
     }
