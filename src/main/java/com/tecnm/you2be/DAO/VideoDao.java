@@ -1,6 +1,7 @@
 package com.tecnm.you2be.DAO;
 
 import com.tecnm.you2be.connection.MySQLConnection;
+import com.tecnm.you2be.models.EstadoCuenta;
 import com.tecnm.you2be.models.Video;
 
 import java.sql.*;
@@ -147,4 +148,103 @@ public class VideoDao extends MySQLConnection implements Dao<Video>  {
         return videoList;
 
     }
+
+
+    public List<Video> mejorEvaluados(){
+
+        List<Video> videoList = new ArrayList<>();
+        String query = "SELECT v.* " +
+                "FROM video AS v " +
+                "JOIN ( " +
+                "    SELECT id_video, COUNT(*) AS views_count " +
+                "    FROM usuario_ver_video " +
+                "    WHERE status = 'FAVORITOS' " +
+                "    GROUP BY id_video " +
+                "    ORDER BY views_count DESC " +
+                "    LIMIT 10 " +
+                ") AS subquery ON v.id_video = subquery.id_video;";
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                Video video = new Video();
+                video.setIdVideo(rs.getInt("id_video"));
+                video.setTitulo(rs.getString("titulo"));
+                video.setDescripcion(rs.getString("descripcion"));
+                video.setLink(rs.getString("link"));
+                video.setTipo(rs.getString("tipo"));
+                video.setPrecio(rs.getBigDecimal("precio"));
+                video.setIdCanal(rs.getInt("id_canal"));
+                videoList.add(video);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return videoList;
+
+    }
+
+
+    public List<EstadoCuenta> estadoCuenta(int id){
+
+        List<EstadoCuenta> estadoCuentaList = new ArrayList<>();
+        String query = "SELECT v.*, " +
+                "       (SELECT SUM(v2.precio) " +
+                "        FROM video AS v2 " +
+                "        INNER JOIN usuario_buy_video AS ubv2 ON v2.id_video = ubv2.id_video " +
+                "        WHERE ubv2.id_usuario = ? AND v2.tipo = 'PAID') AS total_price " +
+                "FROM video AS v " +
+                "INNER JOIN usuario_buy_video AS ubv ON v.id_video = ubv.id_video " +
+                "WHERE ubv.id_usuario = ? AND v.tipo='PAID';";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, id);
+            statement.setInt(2, id);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                EstadoCuenta estadoCuenta = new EstadoCuenta();
+                estadoCuenta.setIdVideo(rs.getInt("id_video"));
+                estadoCuenta.setTitulo(rs.getString("titulo"));
+                estadoCuenta.setDescripcion(rs.getString("descripcion"));
+                estadoCuenta.setTipo(rs.getString("tipo"));
+                estadoCuenta.setPrecio(rs.getBigDecimal("precio"));
+                estadoCuenta.setPrecioTotal(rs.getBigDecimal("total_price"));
+                estadoCuentaList.add(estadoCuenta);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return estadoCuentaList;
+
+    }
+
+
+    private List<Video> videosComprados(int id){
+
+        List<Video> videoList = new ArrayList<>();
+        String query = "SELECT v.* " +
+                "FROM video AS v " +
+                "INNER JOIN usuario_buy_video AS ubv ON v.id_video = ubv.id_video " +
+                "WHERE ubv.id_usuario = ? AND v.tipo = 'PAID'";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Video video = new Video();
+                video.setIdVideo(rs.getInt("id_video"));
+                video.setTitulo(rs.getString("titulo"));
+                video.setDescripcion(rs.getString("descripcion"));
+                video.setLink(rs.getString("link"));
+                video.setTipo(rs.getString("tipo"));
+                video.setPrecio(rs.getBigDecimal("precio"));
+                video.setIdCanal(rs.getInt("id_canal"));
+                videoList.add(video);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return videoList;
+    }
+
 }

@@ -1,9 +1,11 @@
 package com.tecnm.you2be;
 
-import com.itextpdf.layout.properties.ParagraphOrphansControl;
-import com.tecnm.you2be.DAO.*;
-import com.tecnm.you2be.models.*;
+import com.tecnm.you2be.DAO.SubscripcionDao;
+import com.tecnm.you2be.models.Subscripcion;
+import com.tecnm.you2be.models.Usuario;
+import com.tecnm.you2be.reports.EstadoCuentaReport;
 import com.tecnm.you2be.reports.MasVistos;
+import com.tecnm.you2be.reports.MejorEvaluados;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,11 +30,14 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import java.util.List;
 
 public class CuentaController implements Initializable{
+
+
 
     @FXML
     private AnchorPane anPaneReportes;
@@ -104,6 +109,9 @@ public class CuentaController implements Initializable{
     private AnchorPane anPaneInformacion;
 
     @FXML
+    private Label lblContraseña;
+
+    @FXML
     private Label lblEmail;
 
     @FXML
@@ -128,6 +136,9 @@ public class CuentaController implements Initializable{
     private Label lblCosto;
 
     @FXML
+    private AnchorPane anPaneMisVideos;
+
+    @FXML
     private Label lblTipo;
 
     TarjetaDao tarjetaDao = new TarjetaDao();
@@ -142,8 +153,18 @@ public class CuentaController implements Initializable{
 
      private MasVistos reporteVistos = new MasVistos();
 
+     private MejorEvaluados mejorEvaluados = new MejorEvaluados();
 
-    public static final String DESTINO_MAS_VISTOS = "results/TasksReport.pdf";
+     private EstadoCuentaReport estadoCuentaReport = new EstadoCuentaReport();
+
+
+    public static final String DESTINO_MAS_VISTOS = "results/MasVistosReporte.pdf";
+
+
+    public static final String DESTINO_MEJOR_EVALUADOS = "results/MejorEvaluadosReporte.pdf";
+
+
+    public static final String DESTINO_ESTADO_CUENTA = "results/EstadoCuenta.pdf";
 
      private double xOffset = 0;
     private double yOffset = 0;
@@ -281,6 +302,7 @@ public class CuentaController implements Initializable{
     }
 
     public void onActualizarAction(ActionEvent actionEvent) {
+
         lblTipo.setVisible(false);
         cboTipoSub.setVisible(true);
         btnActualizar.setVisible(false);
@@ -305,10 +327,13 @@ public class CuentaController implements Initializable{
 
     public void onReporteMasVistos(){
 
+
+        Usuario newUser = LoginController.getUsuarioActual();
+
         try {
             File file = new File(DESTINO_MAS_VISTOS);
             file.getParentFile().mkdirs();
-            reporteVistos.createPdf(DESTINO_MAS_VISTOS, 1);
+            reporteVistos.createPdf(DESTINO_MAS_VISTOS, newUser.getIdUsuario());
             openFile(DESTINO_MAS_VISTOS);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -318,9 +343,29 @@ public class CuentaController implements Initializable{
 
     public void onReporteMejorEvaluados(){
 
+        try {
+            File file = new File(DESTINO_MEJOR_EVALUADOS);
+            file.getParentFile().mkdirs();
+            mejorEvaluados.createPdf(DESTINO_MEJOR_EVALUADOS);
+            openFile(DESTINO_MEJOR_EVALUADOS);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void onReporteEstadoCuenta(){
+
+        Usuario newUser = LoginController.getUsuarioActual();
+
+        try {
+            File file = new File(DESTINO_ESTADO_CUENTA);
+            file.getParentFile().mkdirs();
+            estadoCuentaReport.createPdf(DESTINO_ESTADO_CUENTA, newUser.getIdUsuario());
+            openFile(DESTINO_ESTADO_CUENTA);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
