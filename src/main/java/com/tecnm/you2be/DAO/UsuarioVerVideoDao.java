@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class UsuarioVerVideoDao extends MySQLConnection implements Dao<UsuarioVerVideo> {
-
-
     private Connection conn = getConnection();
     private String table = "usuario_ver_video";
 
@@ -75,9 +73,6 @@ public class UsuarioVerVideoDao extends MySQLConnection implements Dao<UsuarioVe
         }
         return false;
     }
-
-
-
     @Override
     public boolean update(UsuarioVerVideo record) {
 
@@ -111,7 +106,6 @@ public class UsuarioVerVideoDao extends MySQLConnection implements Dao<UsuarioVe
 
     public void insertUpdate(Usuario usr, CardVideo vd, UsuarioVerVideo record){
         String query = "select uvv.id_usurio_video from usuario_ver_video uvv where uvv.id_usuario = ? and uvv.id_video = ?";
-
         try{
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, usr.getIdUsuario());
