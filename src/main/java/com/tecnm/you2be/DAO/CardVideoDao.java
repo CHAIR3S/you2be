@@ -16,7 +16,6 @@ import java.util.Optional;
 public class CardVideoDao extends MySQLConnection implements Dao<CardVideo> {
     Connection conn = getConnection();
 
-
     @Override
     public Optional<CardVideo> findById(int id) {
         return Optional.empty();
