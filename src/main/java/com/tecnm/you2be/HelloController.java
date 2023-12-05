@@ -151,7 +151,7 @@ public class HelloController implements Initializable {
         usuarioVerVideo.setIdVideo(selectedCard.getIdVideo());
         usuarioVerVideo.setStatus("favoritos");
         usuarioVerVideo.setIdUsuario(this.usuario.getIdUsuario());
-        usuarioVerVideoDao.insertUpdate( this.usuario, selectedCard, usuarioVerVideo);
+        usuarioVerVideoDao.update( usuarioVerVideo);
     }
 
     @FXML
@@ -181,14 +181,11 @@ public class HelloController implements Initializable {
         anPaneInicio.setVisible(true);
     }
     public void onMisVideosOpen(ActionEvent actionEvent) throws SQLException {
-        Usuario usuario = LoginController.getUsuarioActual();
         cargarUtilidadesDeVideos();
-        listVideos = cardVideoDao.getAllMyVideos(usuario);
+        listVideos = cardVideoDao.getAllMyVideos(this.usuario);
         finalizarUrilidadesDeVideos();
     }
     public void onFavoritosOpen(ActionEvent actionEvent) throws SQLException {
-
-
         cargarUtilidadesDeVideos();
         listVideos = cardVideoDao.getAllMyFavoriteVideos(this.usuario);
         finalizarUrilidadesDeVideos();
@@ -220,7 +217,7 @@ public class HelloController implements Initializable {
             });
 
 
-                // Cerrar la ventana actual
+            // Cerrar la ventana actual
             Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             currentStage.close();
 
@@ -232,12 +229,11 @@ public class HelloController implements Initializable {
 
     @FXML
     void searchVideosInDatabase() throws SQLException {
-        Usuario usuario = LoginController.getUsuarioActual();
 
         if(txtBusqueda.getText().trim().isEmpty()){
             mostrarMensajeError("Ingresa texto para buscar en la base de datos");
         }else{
-            List<CardVideo> listVideos = cardVideoDao.getAllMyVideos(usuario, txtBusqueda.getText());
+            List<CardVideo> listVideos = cardVideoDao.getAllMyVideos(this.usuario, txtBusqueda.getText());
 
             if( listVideos.isEmpty() ){
                 mostrarMensajeError("No se encontro ningun video dentro de la base de datos");
@@ -251,7 +247,7 @@ public class HelloController implements Initializable {
     }
 
 
-// Método para obtener datos del objet seleccionado de lista de videos
+    // Método para obtener datos del objet seleccionado de lista de videos
     public void handleListViewClick() {
         // Obtiene el ítem seleccionado
         selectedCard = imageListView.getSelectionModel().getSelectedItem();
@@ -267,7 +263,6 @@ public class HelloController implements Initializable {
         }
     }
     public void handleListViewInitClick(){
-        Usuario usuario = LoginController.getUsuarioActual();
 
         selectedCard = imageListViewInit.getSelectionModel().getSelectedItem();
 
@@ -278,19 +273,9 @@ public class HelloController implements Initializable {
             playFreeVideo(selectedCard.getLinkVideo());
         }
         else{
-
-
-            boolean usrWithCard = usuarioBuyVideoDao.checkIfUserHaveCard(usuario);
-
-            if( usrWithCard ) {
-
-                Subscripcion subUser = subscripcionDao.checkUserSubscription(usuario);
-            }else
-
             boolean usrWithCard = usuarioBuyVideoDao.checkIfUserHaveCard(this.usuario);
             if( usrWithCard ){
                 Subscripcion subUser = subscripcionDao.checkUserSubscription(this.usuario);
-
                 // Codigo para realizar compra
             } else {
                 if( !selectedCard.getTipo().equals("free")){
@@ -327,8 +312,6 @@ public class HelloController implements Initializable {
     }
 
     private void cargarUtilidadesDeVideos(){
-        Usuario usuario = LoginController.getUsuarioActual();
-
         if( usuario != null ){
             cerrarVentanas();
             anPaneMisVideos.setVisible(true);
