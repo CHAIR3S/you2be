@@ -64,7 +64,7 @@ public class VideoDao extends MySQLConnection implements Dao<Video>  {
 
     @Override
     public boolean save(Video record) {
-        String query = "insert into " + table + " (titulo, descripcion, link, tipo, precio, id_canal) values (?, ?, ?, ?, ?, ?)";
+        String query = "insert into " + table + " (titulo, descripcion, link, tipo, precio) values (?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, record.getTitulo());
@@ -72,7 +72,6 @@ public class VideoDao extends MySQLConnection implements Dao<Video>  {
             ps.setString(3, record.getLink());
             ps.setString(4, record.getTipo());
             ps.setBigDecimal(5, record.getPrecio());
-            ps.setInt(6, record.getIdCanal());
             ps.execute();
             return true;
         } catch (SQLException e) {

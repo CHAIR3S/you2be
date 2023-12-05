@@ -58,6 +58,44 @@ public class TarjetaDao extends MySQLConnection implements Dao<Tarjeta>  {
         return tarjetaList;
     }
 
+    public List<String> findAllNumerosTarjeta() {
+        List<String> numerosTarjeta = new ArrayList<>();
+        String query = "SELECT numero FROM " + table; // Cambia 'table' al nombre de tu tabla
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                String numero = rs.getString("numero");
+                numerosTarjeta.add(numero);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return numerosTarjeta;
+    }
+
+    public int getIdByNumero(String numeroTarjeta) {
+        int idTarjeta = -1; // Valor predeterminado si no se encuentra el ID
+
+        String query = "SELECT id_tarjeta FROM tarjetas WHERE numero = ?";
+
+        try (PreparedStatement statement = conn.prepareStatement(query)) {
+            statement.setString(1, numeroTarjeta);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                idTarjeta = resultSet.getInt("id_tarjeta");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener el ID de la tarjeta", e);
+        }
+
+        return idTarjeta;
+    }
+
     @Override
     public boolean save(Tarjeta record) {
         String query = "insert into " + table + " (numero, cvv, tipo) values (?, ?, ?)";

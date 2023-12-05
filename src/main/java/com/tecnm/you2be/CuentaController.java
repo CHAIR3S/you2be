@@ -1,8 +1,8 @@
 package com.tecnm.you2be;
 
-import com.tecnm.you2be.DAO.SubscripcionDao;
-import com.tecnm.you2be.models.Subscripcion;
-import com.tecnm.you2be.models.Usuario;
+import com.itextpdf.layout.properties.ParagraphOrphansControl;
+import com.tecnm.you2be.DAO.*;
+import com.tecnm.you2be.models.*;
 import com.tecnm.you2be.reports.MasVistos;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,29 +21,81 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.control.Label;
 
+import javafx.scene.control.TextField;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.scene.control.Button;
+import java.util.List;
 
 public class CuentaController implements Initializable{
 
-
-
     @FXML
-    private Label lblUsuario;
+    private AnchorPane anPaneReportes;
 
     @FXML
     private Label lblNombre;
 
     @FXML
-    private Label lblNacimiento;
+    private TextField txtNoTarjeta;
 
     @FXML
-    private ComboBox<String> cboTipo;
+    private TextField txtTituloVideo;
+
+    @FXML
+    private Label lblContraseña;
+
+    @FXML
+    private ComboBox<String> cboMetodoPago;
+
+    @FXML
+    private TextField txtUrlLink;
+
+    @FXML
+    private TextField txtTipoVideo;
+
+    @FXML
+    private TextField txtPrecio;
+
+    @FXML
+    private ComboBox<String> cboTipoSub;
+
+    @FXML
+    private TextField txtCVV;
+
+    @FXML
+    private ComboBox<String> cboTipoTarjeta;
+
+    @FXML
+    private AnchorPane anPaneTarjeta;
+
+    @FXML
+    private Button btnPagar;
+
+    @FXML
+    private AnchorPane anPaneCuenta;
+
+    @FXML
+    private AnchorPane anPaneMisVideos;
+
+    @FXML
+    private Button btnActualizar;
+
+    @FXML
+    private TextField txtDescripcionVideo;
+
+    @FXML
+    private TextField txtMonto;
+
+    @FXML
+    private Label lblUsuario;
+
+    @FXML
+    private Label lblNacimiento;
 
     @FXML
     private AnchorPane anPaneCompras;
@@ -52,19 +104,22 @@ public class CuentaController implements Initializable{
     private AnchorPane anPaneInformacion;
 
     @FXML
-    private Label lblContraseña;
-
-    @FXML
     private Label lblEmail;
 
     @FXML
     private AnchorPane anPaneSuscripcion;
 
     @FXML
-    private AnchorPane anPaneCuenta;
+    private TextField txtUrlImagen;
 
     @FXML
-    private AnchorPane anPaneReportes;
+    private AnchorPane anPanePago;
+
+    @FXML
+    private Button onPagar;
+
+    @FXML
+    private ComboBox<String> cboTarjetaPago;
 
     @FXML
     private Label lblTitle;
@@ -73,16 +128,16 @@ public class CuentaController implements Initializable{
     private Label lblCosto;
 
     @FXML
-    private AnchorPane anPaneMisVideos;
-
-    @FXML
     private Label lblTipo;
 
-    @FXML
-    private Button btnActualizar;
+    TarjetaDao tarjetaDao = new TarjetaDao();
+    PagoDao pagoDao = new PagoDao();
 
-    @FXML
-    private Button btnPagar;
+    VideoDao videoDao = new VideoDao();
+
+    CanalDao canalDao = new CanalDao();
+
+    SubscripcionDao subscripcionDao = new SubscripcionDao();
      Usuario usuario = new Usuario();
 
      private MasVistos reporteVistos = new MasVistos();
@@ -95,14 +150,40 @@ public class CuentaController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<String> options = FXCollections.observableArrayList("premium", "basic");
-    cboTipo.setItems(options);
+
+        ObservableList<String> optionsTipoSub = FXCollections.observableArrayList("premium", "basic");
+        cboTipoSub.setItems(optionsTipoSub);
 
     // También puedes seleccionar un valor por defecto si lo deseas
-    cboTipo.getSelectionModel().selectFirst(); // Esto seleccionará el primer valor ("premium") por defecto
+    cboTipoSub.getSelectionModel().selectFirst(); // Esto seleccionará el primer valor ("premium") por defecto
 
     // Agregar un listener al ComboBox para detectar cambios de selección
-    cboTipo.setOnAction(event -> actualizarCosto(cboTipo.getValue()));
+    cboTipoSub.setOnAction(event -> actualizarCosto(cboTipoSub.getValue()));
+
+
+
+
+    ObservableList<String> optionsTipoTarjeta = FXCollections.observableArrayList("credito", "debito");
+    cboTipoTarjeta.setItems(optionsTipoTarjeta);
+    cboTipoTarjeta.getSelectionModel().selectFirst();
+
+
+    ObservableList<String> optionMetodoPago = FXCollections.observableArrayList("tarjeta puntos", "tarjeta credito/debito");
+    cboMetodoPago.setItems(optionMetodoPago);
+    cboMetodoPago.getSelectionModel().selectFirst();
+
+    inicializarComboBox();
+    }
+
+    public void inicializarComboBox() {
+        // Obtener todos los números de tarjeta usando el método del DAO
+        List<String> numerosTarjeta = tarjetaDao.findAllNumerosTarjeta();
+
+        // Convertir la lista de números de tarjeta a un ObservableList para el ComboBox
+        ObservableList<String> numerosTarjetaObservable = FXCollections.observableArrayList(numerosTarjeta);
+
+        // Asignar los items al ComboBox
+        cboTarjetaPago.setItems(numerosTarjetaObservable);
     }
 
     @FXML
@@ -194,13 +275,14 @@ public class CuentaController implements Initializable{
         anPaneSuscripcion.setVisible(false);
         anPaneCuenta.setVisible(true);
         anPaneReportes.setVisible(false);
+        anPaneTarjeta.setVisible(false);
+        anPanePago.setVisible(false);
         lblTitle.setText("");
     }
 
     public void onActualizarAction(ActionEvent actionEvent) {
-
         lblTipo.setVisible(false);
-        cboTipo.setVisible(true);
+        cboTipoSub.setVisible(true);
         btnActualizar.setVisible(false);
         btnPagar.setVisible(true);
 
@@ -216,31 +298,9 @@ public class CuentaController implements Initializable{
     }
 }
 
-    public void onPagarAction(ActionEvent actionEvent) {
-        /*
-        // Suponiendo que tienes una instancia de SubscripcionDao llamada subscripcionDao
-    SubscripcionDao subscripcionDao = new SubscripcionDao();
-
-    // Suponiendo que tienes el ID del registro de subscripción que estás trabajando
-    int idSubscripcion = obtenerIdSubscripcion(); // Debes obtener el ID correspondiente
-
-    Optional<Subscripcion> subscripcionOptional = subscripcionDao.findById(idSubscripcion);
-
-    if (subscripcionOptional.isPresent()) {
-        Subscripcion subscripcion = subscripcionOptional.get();
-        int idPago = subscripcion.getIdPago();
-
-        if (idPago != 0) {
-            // idPago no es nulo, haz lo que necesites hacer si no es nulo
-            // Por ejemplo, algún tipo de lógica para manejar el pago ya realizado
-        } else {
-            // idPago es nulo, puedes hacer algo aquí
-            // Por ejemplo, permitir al usuario realizar un pago
-        }
-    } else {
-        // No se encontró la subscripción, maneja esta situación según tu lógica de negocio
-    }
-         */
+    public void onMetodoPago(ActionEvent actionEvent) {
+        anPaneTarjeta.setVisible(true);
+        anPaneSuscripcion.setVisible(false);
     }
 
     public void onReporteMasVistos(){
@@ -273,9 +333,93 @@ public class CuentaController implements Initializable{
     }
 
     public void onAgregarTarjeta(ActionEvent actionEvent) {
+    // Obtener los datos de los TextField
+    String numeroTarjeta = txtNoTarjeta.getText();
+    String cvv = txtCVV.getText();
+
+    // Obtener el tipo de tarjeta seleccionado en el ComboBox
+    String tipo = cboTipoTarjeta.getSelectionModel().getSelectedItem();
+
+    // Verificar si se ha seleccionado algún tipo de tarjeta
+    if (tipo == null || tipo.isEmpty()) {
+        System.out.println("Por favor, selecciona un tipo de tarjeta");
+        // Puedes manejar este caso específico, por ejemplo, mostrar un mensaje al usuario
+        return; // Salir del método ya que el tipo de tarjeta no está seleccionado
     }
 
+    // Crear un objeto Tarjeta con los datos obtenidos
+    Tarjeta nuevaTarjeta = new Tarjeta();
+    nuevaTarjeta.setNumero(numeroTarjeta);
+    nuevaTarjeta.setCvv(cvv);
+    nuevaTarjeta.setTipo(tipo);
+
+    // Guardar la nueva tarjeta en la base de datos usando el método save
+    boolean guardadoExitoso = tarjetaDao.save(nuevaTarjeta); // Suponiendo que 'save' es un método de la misma clase que contiene la lógica para guardar en la base de datos
+
+    if (guardadoExitoso) {
+        // Éxito al guardar la tarjeta en la base de datos
+        System.out.println("Tarjeta guardada exitosamente en la base de datos");
+        // Puedes realizar otras acciones aquí, como limpiar los TextField o mostrar un mensaje de éxito
+        anPaneTarjeta.setVisible(false);
+        anPanePago.setVisible(true);
+    } else {
+        // Error al guardar la tarjeta en la base de datos
+        System.out.println("Error al guardar la tarjeta en la base de datos");
+        // Puedes manejar el error mostrando un mensaje al usuario o realizando alguna acción específica
+    }
+
+
+    }
+
+
+    //Metodo para subir videos----------------------------------------------------------------------------------------------------------------------------------
     public void onSubirVideo(ActionEvent actionEvent) {
+    Video video = new Video();
+
+    // Obtener los valores de los TextField
+    String link = txtUrlLink.getText();
+    String imagen = txtUrlImagen.getText();
+    String titulo = txtTituloVideo.getText();
+    String descripcion = txtDescripcionVideo.getText();
+    String tipo = txtTipoVideo.getText();
+    String precio = txtPrecio.getText();
+
+    // Validar si algún TextField está vacío
+    if (link.isEmpty() || imagen.isEmpty() || titulo.isEmpty() || descripcion.isEmpty() || tipo.isEmpty() || precio.isEmpty()) {
+        // Mostrar un mensaje indicando que algún campo está vacío
+        mostrarMensajeError("Por favor, completa todos los campos.");
+        return; // Salir del método si algún campo está vacío
+    }
+
+    // Si todos los campos están llenos, continuar con la lógica para guardar el video
+
+    try {
+        BigDecimal bDPrecio = new BigDecimal(precio);
+
+        String url = link + " " + imagen;
+
+        video.setLink(url);
+        video.setTitulo(titulo);
+        video.setDescripcion(descripcion);
+        video.setTipo(tipo);
+        video.setPrecio(bDPrecio);
+
+        // Guardar el video en la base de datos usando el método save
+        boolean guardadoExitoso = videoDao.save(video);
+
+        if (guardadoExitoso) {
+            // Éxito al guardar el video en la base de datos
+            System.out.println("Video guardado exitosamente en la base de datos");
+            // Puedes realizar otras acciones aquí, como limpiar los TextField o mostrar un mensaje de éxito
+        } else {
+            // Error al guardar el video en la base de datos
+            System.out.println("Error al guardar el video en la base de datos");
+            // Puedes manejar el error mostrando un mensaje al usuario o realizando alguna acción específica
+        }
+    } catch (NumberFormatException e) {
+        // Manejar la excepción si el campo de precio no se puede convertir a BigDecimal
+        mostrarMensajeError("El precio debe ser un número válido.");
+    }
     }
 
     private void openFile(String filename) {
@@ -289,5 +433,81 @@ public class CuentaController implements Initializable{
         }
     }
 
+    public void onPagarAction(ActionEvent actionEvent) {
+
+
+        // Obtener los datos de los TextField
+    String metodo = cboMetodoPago.getSelectionModel().getSelectedItem();
+    String monto = txtMonto.getText();
+
+    // Verificar si se ha seleccionado algún método de pago
+    if (metodo == null || metodo.isEmpty()) {
+        System.out.println("Por favor, selecciona un método de pago");
+        // Puedes manejar este caso específico, por ejemplo, mostrar un mensaje al usuario
+        return; // Salir del método ya que el método de pago no está seleccionado
+    }
+
+    // Obtener el número de tarjeta seleccionado en el ComboBox
+    String numeroTarjetaSeleccionado = cboTarjetaPago.getSelectionModel().getSelectedItem();
+
+    // Obtener el ID de la tarjeta seleccionada desde la base de datos usando el DAO
+    int idTarjetaSeleccionada = tarjetaDao.getIdByNumero(numeroTarjetaSeleccionado);
+
+    if (idTarjetaSeleccionada != -1) { // Verificar si se encontró el ID de la tarjeta
+        Pago pago = new Pago();
+        pago.setMetodo(metodo);
+        pago.setMonto(Double.parseDouble(monto));
+        pago.setIdTarjeta(idTarjetaSeleccionada); // Asignar el ID de la tarjeta al pago
+
+        // Guardar el pago en la base de datos usando el método save
+        boolean guardadoExitoso = pagoDao.save(pago); // Suponiendo que 'save' es un método de la misma clase que contiene la lógica para guardar en la base de datos
+
+        if (guardadoExitoso) {
+            // Éxito al guardar el pago en la base de datos
+            System.out.println("Pago realizado exitosamente en la base de datos");
+            // Puedes realizar otras acciones aquí, como limpiar los TextField o mostrar un mensaje de éxito
+            anPanePago.setVisible(false);
+            anPaneSuscripcion.setVisible(true);
+        } else {
+            // Error al guardar el pago en la base de datos
+            System.out.println("Error al realizar el pago en la base de datos");
+            // Puedes manejar el error mostrando un mensaje al usuario o realizando alguna acción específica
+        }
+    } else {
+        // No se encontró el ID de la tarjeta
+        System.out.println("No se encontró el ID de la tarjeta seleccionada");
+        // Puedes manejar este caso específico, por ejemplo, mostrando un mensaje al usuario
+    }
+
+    addSubscripcion();
+
+    }
+
+    private void addSubscripcion() {
+
+    Subscripcion subscripcion = new Subscripcion(); // Suponiendo que tienes una instancia de Subscripcion
+
+    // Asignar valores al objeto Subscripcion desde tu lógica
+    BigDecimal costo = new BigDecimal(lblCosto.getText()); // Obtener el costo desde un label, por ejemplo
+    String tipo = cboTipoSub.getValue(); // Obtener el tipo desde el ComboBox
+
+
+    // Asignar los valores al objeto Subscripcion
+    subscripcion.setCosto(costo);
+    subscripcion.setTipo(tipo);
+
+    // Ahora, puedes usar tu método save para guardar la subscripción en la base de datos
+    boolean guardadoExitoso = subscripcionDao.save(subscripcion);
+
+    if (guardadoExitoso) {
+        // Éxito al guardar la subscripción en la base de datos
+        System.out.println("Subscripción guardada exitosamente en la base de datos");
+        // Puedes realizar otras acciones aquí, como limpiar los valores o mostrar un mensaje de éxito
+    } else {
+        // Error al guardar la subscripción en la base de datos
+        System.out.println("Error al guardar la subscripción en la base de datos");
+        // Puedes manejar el error mostrando un mensaje al usuario o realizando alguna acción específica
+    }
+    }
 }
 
