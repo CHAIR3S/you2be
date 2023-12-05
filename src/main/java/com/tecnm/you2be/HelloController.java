@@ -239,6 +239,8 @@ public class HelloController implements Initializable {
                 mostrarMensajeError("No se encontro ningun video dentro de la base de datos");
             }
             else{
+                imageListView.getItems().removeAll();
+                imageListView.getItems().clear();
                 imageListView.getItems().addAll(listVideos);
                 utilidadesDelListVies(imageListView);
             }

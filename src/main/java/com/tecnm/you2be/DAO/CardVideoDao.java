@@ -78,7 +78,7 @@ public class CardVideoDao extends MySQLConnection implements Dao<CardVideo> {
         List<CardVideo> listVideos = FXCollections.observableArrayList();
 
         String queryUser = "select link, tipo, descripcion, v.id_video, titulo, nombre, precio from canal c join video v " +
-                "on v.id_canal = c.id_canal where c.id_usuario = " + usuario.getIdUsuario() + "and v.titulo like '%" + textInVideo + "%'";
+                "on v.id_canal = c.id_canal where c.id_usuario = " + usuario.getIdUsuario() + " and v.titulo like '%" + textInVideo + "%'";
 
         Statement statement = conn.createStatement();
         ResultSet rsu = statement.executeQuery(queryUser);
