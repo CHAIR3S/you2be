@@ -26,7 +26,7 @@ public class MejorEvaluados {
 
     private VideoDao videoDao = new VideoDao();
 
-    public void createPdf(String dest, int idUsuario) throws IOException {
+    public void createPdf(String dest) throws IOException {
         //Initialize PDF writer
         PdfWriter writer = new PdfWriter(dest);
 
@@ -46,7 +46,7 @@ public class MejorEvaluados {
 
 
         //Crear lista para llenar filas
-        List<Video> oTaskList = videoDao.masVistos(idUsuario);
+        List<Video> oEvaluados = videoDao.mejorEvaluados();
         List<Video> oTableDTOList = new ArrayList<>();
 
 //        oTaskList.forEach( task -> {
@@ -62,12 +62,12 @@ public class MejorEvaluados {
 
 
 
-        for( Video fila : oTableDTOList){
+        for( Video fila : oEvaluados){
             addTableRow(table, fila, font);
         }
 
 
-        Paragraph title = new Paragraph("TOP 10 VIDEOS MAS VISTOS");
+        Paragraph title = new Paragraph("TOP 10 VIDEOS MEJOR EVALUADOS");
         title.setTextAlignment(TextAlignment.CENTER);
         title.setFont(bold);
         title.setFontSize(30);

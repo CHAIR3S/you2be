@@ -14,7 +14,7 @@
 
 
     <children>
-      <AnchorPane prefHeight="616.0" prefWidth="993.0" style="-fx-background-color: #030307; -fx-background-radius: 15;">
+      <AnchorPane prefHeight="726.0" prefWidth="993.0" style="-fx-background-color: #030307; -fx-background-radius: 15;">
          <children>
             <VBox prefHeight="544.0" prefWidth="74.0" style="-fx-background-color: #131022; -fx-background-radius: 15 0 0 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -57,7 +57,7 @@
                         </ImageView>
                      </graphic>
                      <VBox.margin>
-                        <Insets top="260.0" />
+                        <Insets top="360.0" />
                      </VBox.margin>
                   </Button>
 

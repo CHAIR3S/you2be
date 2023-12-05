@@ -381,6 +381,26 @@
                   </Button>
 
 
+
+                  <!--Todo lo que va dentro del recuadro ponerlo adentro del pane-->
+                  <Pane fx:id="" layoutX="39.0" layoutY="68.0" prefHeight="300.0" prefWidth="803.0">
+
+
+                     <children>
+                        <ImageView fitHeight="295.0" fitWidth="447.0" layoutX="244.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../imagenes/dinosaurio.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+
+                     <!-- Lista de videos de resultado -->
+                     <ListView fx:id="imageListView"
+                               prefWidth="800"  prefHeight="370" >
+                     </ListView>
+
+                  </Pane>
+
                </children>
             </AnchorPane>
 
@@ -416,7 +436,7 @@
 
 
 
-                  <Button layoutX="304.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="Mejor evaluados">
+                  <Button layoutX="304.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReporteMejorEvaluados" text="Mejor evaluados">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -428,7 +448,7 @@
 
 
 
-                  <Button layoutX="474.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCuenta" text="Estado de cuenta">
+                  <Button layoutX="474.0" layoutY="14.0" mnemonicParsing="false" onAction="#onReporteEstadoCuenta" text="Estado de cuenta">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                            <image>

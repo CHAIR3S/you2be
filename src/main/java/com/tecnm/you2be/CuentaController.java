@@ -3,7 +3,9 @@ package com.tecnm.you2be;
 import com.tecnm.you2be.DAO.SubscripcionDao;
 import com.tecnm.you2be.models.Subscripcion;
 import com.tecnm.you2be.models.Usuario;
+import com.tecnm.you2be.reports.EstadoCuentaReport;
 import com.tecnm.you2be.reports.MasVistos;
+import com.tecnm.you2be.reports.MejorEvaluados;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -87,8 +89,18 @@ public class CuentaController implements Initializable{
 
      private MasVistos reporteVistos = new MasVistos();
 
+     private MejorEvaluados mejorEvaluados = new MejorEvaluados();
 
-    public static final String DESTINO_MAS_VISTOS = "results/TasksReport.pdf";
+     private EstadoCuentaReport estadoCuentaReport = new EstadoCuentaReport();
+
+
+    public static final String DESTINO_MAS_VISTOS = "results/MasVistosReporte.pdf";
+
+
+    public static final String DESTINO_MEJOR_EVALUADOS = "results/MejorEvaluadosReporte.pdf";
+
+
+    public static final String DESTINO_ESTADO_CUENTA = "results/EstadoCuenta.pdf";
 
      private double xOffset = 0;
     private double yOffset = 0;
@@ -185,6 +197,8 @@ public class CuentaController implements Initializable{
         anPaneCuenta.setVisible(false);
         anPaneCompras.setVisible(true);
         lblTitle.setText("Mis compras");
+
+
     }
 
     public void onCuenta(ActionEvent actionEvent) {
@@ -245,10 +259,13 @@ public class CuentaController implements Initializable{
 
     public void onReporteMasVistos(){
 
+
+        Usuario newUser = LoginController.getUsuarioActual();
+
         try {
             File file = new File(DESTINO_MAS_VISTOS);
             file.getParentFile().mkdirs();
-            reporteVistos.createPdf(DESTINO_MAS_VISTOS, 1);
+            reporteVistos.createPdf(DESTINO_MAS_VISTOS, newUser.getIdUsuario());
             openFile(DESTINO_MAS_VISTOS);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -258,9 +275,29 @@ public class CuentaController implements Initializable{
 
     public void onReporteMejorEvaluados(){
 
+        try {
+            File file = new File(DESTINO_MEJOR_EVALUADOS);
+            file.getParentFile().mkdirs();
+            mejorEvaluados.createPdf(DESTINO_MEJOR_EVALUADOS);
+            openFile(DESTINO_MEJOR_EVALUADOS);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public void onReporteEstadoCuenta(){
+
+        Usuario newUser = LoginController.getUsuarioActual();
+
+        try {
+            File file = new File(DESTINO_ESTADO_CUENTA);
+            file.getParentFile().mkdirs();
+            estadoCuentaReport.createPdf(DESTINO_ESTADO_CUENTA, newUser.getIdUsuario());
+            openFile(DESTINO_ESTADO_CUENTA);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

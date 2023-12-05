@@ -181,11 +181,14 @@ public class HelloController implements Initializable {
         anPaneInicio.setVisible(true);
     }
     public void onMisVideosOpen(ActionEvent actionEvent) throws SQLException {
+        Usuario usuario = LoginController.getUsuarioActual();
         cargarUtilidadesDeVideos();
-        listVideos = cardVideoDao.getAllMyVideos(this.usuario);
+        listVideos = cardVideoDao.getAllMyVideos(usuario);
         finalizarUrilidadesDeVideos();
     }
     public void onFavoritosOpen(ActionEvent actionEvent) throws SQLException {
+
+
         cargarUtilidadesDeVideos();
         listVideos = cardVideoDao.getAllMyFavoriteVideos(this.usuario);
         finalizarUrilidadesDeVideos();
@@ -229,11 +232,12 @@ public class HelloController implements Initializable {
 
     @FXML
     void searchVideosInDatabase() throws SQLException {
+        Usuario usuario = LoginController.getUsuarioActual();
 
         if(txtBusqueda.getText().trim().isEmpty()){
             mostrarMensajeError("Ingresa texto para buscar en la base de datos");
         }else{
-            List<CardVideo> listVideos = cardVideoDao.getAllMyVideos(this.usuario, txtBusqueda.getText());
+            List<CardVideo> listVideos = cardVideoDao.getAllMyVideos(usuario, txtBusqueda.getText());
 
             if( listVideos.isEmpty() ){
                 mostrarMensajeError("No se encontro ningun video dentro de la base de datos");
@@ -263,6 +267,7 @@ public class HelloController implements Initializable {
         }
     }
     public void handleListViewInitClick(){
+        Usuario usuario = LoginController.getUsuarioActual();
 
         selectedCard = imageListViewInit.getSelectionModel().getSelectedItem();
 
@@ -272,11 +277,7 @@ public class HelloController implements Initializable {
         else if ( selectedCard.getTipo().equalsIgnoreCase("free")){
             playFreeVideo(selectedCard.getLinkVideo());
         }
-        else{
-            boolean usrWithCard = usuarioBuyVideoDao.checkIfUserHaveCard(this.usuario);
-            if( usrWithCard ){
-                Subscripcion subUser = subscripcionDao.checkUserSubscription(this.usuario);
-                // Codigo para realizar compra
+             // Codigo para realizar compra
             } else {
                 if( !selectedCard.getTipo().equals("free")){
 
@@ -312,6 +313,8 @@ public class HelloController implements Initializable {
     }
 
     private void cargarUtilidadesDeVideos(){
+        Usuario usuario = LoginController.getUsuarioActual();
+
         if( usuario != null ){
             cerrarVentanas();
             anPaneMisVideos.setVisible(true);
